@@ -41,7 +41,7 @@ const CelebrityModal = ({
       <div className="p-4 text-white space-y-4">
         {/* Info Section */}
         <div className="bg-gray-800/50 rounded-xl p-3 text-sm text-gray-300">
-          <div className="flex justify-between gap-4">
+          <div className="flex justify-between items-center gap-4">
             <div className="flex flex-col gap-3 text-sm text-gray-300">
               <div className="border-b border-gray-700 pb-2">
                 <span className="font-semibold text-white">Fee Range:</span>{" "}
@@ -58,8 +58,6 @@ const CelebrityModal = ({
             </div>
 
             <div className="text-right space-y-2 font-semibold">
-              <div className="text-white">{scrobbles}</div>
-              <div className="text-sm text-gray-400">Scrobbles</div>
               <div className="text-white">{audience}</div>
               <div className="text-sm text-gray-400">Audience</div>
             </div>
