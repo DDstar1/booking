@@ -1,5 +1,6 @@
 const celebrities = [
   {
+    id: "john-doe",
     name: "John Doe",
     role: "TV Personality | Actor",
     image: "https://randomuser.me/api/portraits/men/16.jpg",
@@ -13,6 +14,7 @@ const celebrities = [
     bio: "John Doe is a well-known television personality and actor. He is available for special appearances and brand collaborations.",
   },
   {
+    id: "mike-smith",
     name: "Mike Smith",
     role: "Comedian | Host",
     image: "https://randomuser.me/api/portraits/men/22.jpg",
@@ -26,6 +28,7 @@ const celebrities = [
     bio: "Mike Smith brings humor and energy to any stage. Perfect for hosting gigs, comedy nights, or media appearances.",
   },
   {
+    id: "robert-johnson",
     name: "Robert Johnson",
     role: "Motivational Speaker",
     image: "https://randomuser.me/api/portraits/men/45.jpg",
@@ -39,6 +42,7 @@ const celebrities = [
     bio: "Robert Johnson inspires audiences around the globe through transformative speaking engagements focused on leadership and motivation.",
   },
   {
+    id: "emily-clark",
     name: "Emily Clark",
     role: "Actress | Influencer",
     image: "https://randomuser.me/api/portraits/women/12.jpg",
@@ -52,6 +56,7 @@ const celebrities = [
     bio: "Emily Clark is a rising star in film and fashion, collaborating with luxury brands and appearing at global events.",
   },
   {
+    id: "sophia-lee",
     name: "Sophia Lee",
     role: "Model | Entrepreneur",
     image: "https://randomuser.me/api/portraits/women/24.jpg",
@@ -65,6 +70,7 @@ const celebrities = [
     bio: "Sophia Lee is a high-profile model and entrepreneur, often seen at fashion week and representing global beauty brands.",
   },
   {
+    id: "david-brown",
     name: "David Brown",
     role: "Sports Figure | Analyst",
     image: "https://randomuser.me/api/portraits/men/33.jpg",
@@ -78,6 +84,7 @@ const celebrities = [
     bio: "David Brown is a former pro-athlete and current sports analyst, available for keynote speaking and media campaigns.",
   },
   {
+    id: "olivia-wilson",
     name: "Olivia Wilson",
     role: "Actress | Public Speaker",
     image: "https://randomuser.me/api/portraits/women/36.jpg",
@@ -91,6 +98,7 @@ const celebrities = [
     bio: "Olivia Wilson is known for her versatile acting and passion for mental health awareness through public speaking.",
   },
   {
+    id: "james-miller",
     name: "James Miller",
     role: "TV Host | Entertainer",
     image: "https://randomuser.me/api/portraits/men/52.jpg",
@@ -104,6 +112,7 @@ const celebrities = [
     bio: "James Miller has hosted some of the most recognized TV segments and is ideal for high-profile entertainment appearances.",
   },
   {
+    id: "ava-martinez",
     name: "Ava Martinez",
     role: "Celebrity | Entertainer",
     image: "https://randomuser.me/api/portraits/women/44.jpg",

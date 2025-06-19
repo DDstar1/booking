@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { Star, Calendar, Users, Award, ArrowRight, Play } from "lucide-react";
-import Navigation from "@/components/Nav";
 import Footer from "@/components/Footer";
 import celebrities from "@/utils/celebrities";
 import CelebCard from "@/components/CelebCard";
@@ -93,7 +92,6 @@ export default function CelebrityBookingLanding() {
 
   return (
     <div className="min-h-screen w-screen overflow-hidden bg-black">
-      <Navigation />
 
       {/* Hero Section */}
       <section className="relative pt-20 pb-32 overflow-hidden">
@@ -287,7 +285,7 @@ export default function CelebrityBookingLanding() {
               }}
             >
               <div className="relative">
-                <CelebrityModal {...selectedCeleb} />
+                <CelebrityModal celeb_data={selectedCeleb} />
                 <button
                   onClick={closeModal}
                   className="absolute -top-10 w-7 h-7 right-2 bg-white text-black rounded-full text-sm font-bold z-50"
