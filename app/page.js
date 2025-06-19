@@ -134,9 +134,11 @@ export default function CelebrityBookingLanding() {
       {/* Featured Celebrities */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-white text-center mb-16">
-            Featured <span className="text-blue-400">Celebrities</span>
-          </h2>
+          <center>
+            <h2 className="text-4xl font-bold text-white text-center mb-16  border-t-4 py-3 w-11/12 border-b-4 border-gray-600">
+              Featured <span className="text-blue-400">Celebrities</span>
+            </h2>
+          </center>
           <div className="grid p-2 w-full gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
             {celebrities.map((celeb, index) => (
               <div
@@ -157,7 +159,7 @@ export default function CelebrityBookingLanding() {
           <h2 className="text-4xl font-bold text-white text-center mb-16">
             How It <span className="text-blue-400">Works</span>
           </h2>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
             {steps.map((step, index) => (
               <div key={index} className="text-center">
                 <div className="bg-blue-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -166,7 +168,7 @@ export default function CelebrityBookingLanding() {
                 <h3 className="text-xl font-bold text-white mb-4">
                   {step.title}
                 </h3>
-                <p className="text-gray-300">{step.description}</p>
+                <p className="text-gray-300 text-left">{step.description}</p>
               </div>
             ))}
           </div>
