@@ -2,22 +2,28 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Star, Menu, X, UserCircle, LogOut } from "lucide-react";
+import { Star, Menu, X } from "lucide-react";
+import Link from "next/link";
 
 const navVariants = {
   hidden: { y: -80, opacity: 0 },
-  visible: { y: 0, opacity: 1, transition: { duration: 0.4, ease: "easeOut" } },
-  exit: { y: -80, opacity: 0, transition: { duration: 0.3, ease: "easeIn" } },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: { duration: 0.4, ease: "easeOut" },
+  },
+  exit: {
+    y: -80,
+    opacity: 0,
+    transition: { duration: 0.3, ease: "easeIn" },
+  },
 };
 
 const Navigation = () => {
   const [showNav, setShowNav] = useState(true);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Replace with real auth
-  const [showUserMenu, setShowUserMenu] = useState(false);
 
-  // Scroll behavior
   useEffect(() => {
     const handleScroll = () => {
       const currentY = window.scrollY;
@@ -30,16 +36,11 @@ const Navigation = () => {
   }, [lastScrollY]);
 
   const links = [
-    { label: "Browse", href: "#celebrities" },
-    { label: "How It Works", href: "#how-it-works" },
-    { label: "Reviews", href: "#testimonials" },
-    { label: "Contact", href: "#contact" },
+    { label: "Celebrity List", href: "#celebrities" },
+    { label: "Featured Celebrities", href: "#featured_celebrities" },
+    { label: "About Us", href: "/about_us" },
+    { label: "Contact Us", href: "/contact_us" },
   ];
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setShowUserMenu(false);
-  };
 
   return (
     <AnimatePresence>
@@ -55,10 +56,10 @@ const Navigation = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
               {/* Logo */}
-              <div className="flex items-center space-x-2">
+              <Link href={`/`} className="flex items-center space-x-2">
                 <Star className="h-8 w-8 text-blue-400" />
                 <span className="text-2xl font-bold text-white">StarBook</span>
-              </div>
+              </Link>
 
               {/* Desktop Nav */}
               <div className="hidden md:flex space-x-8">
@@ -73,44 +74,8 @@ const Navigation = () => {
                 ))}
               </div>
 
-              {/* Desktop Buttons */}
+              {/* Desktop Button */}
               <div className="hidden md:flex items-center space-x-4">
-                {isLoggedIn ? (
-                  <div className="relative">
-                    <button
-                      onClick={() => setShowUserMenu(!showUserMenu)}
-                      className="flex items-center text-white hover:text-blue-400 transition"
-                    >
-                      <UserCircle className="h-8 w-8" />
-                    </button>
-                    <AnimatePresence>
-                      {showUserMenu && (
-                        <motion.div
-                          initial={{ opacity: 0, y: -10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
-                          className="absolute right-0 mt-2 w-40 bg-black border border-gray-700 rounded-lg shadow-lg z-10"
-                        >
-                          <button
-                            onClick={handleLogout}
-                            className="flex items-center gap-2 w-full text-left px-4 py-2 text-gray-300 hover:bg-gray-800"
-                          >
-                            <LogOut className="h-4 w-4" />
-                            Logout
-                          </button>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                ) : (
-                  <button
-                    onClick={() => setIsLoggedIn(true)}
-                    className="text-white hover:text-blue-400 font-medium transition"
-                  >
-                    Login
-                  </button>
-                )}
-
                 <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105">
                   Book Now
                 </button>
@@ -149,25 +114,6 @@ const Navigation = () => {
                       {link.label}
                     </a>
                   ))}
-                  {isLoggedIn ? (
-                    <button
-                      onClick={handleLogout}
-                      className="w-full mt-2 flex items-center justify-center text-red-400 hover:text-red-500 gap-2 py-2"
-                    >
-                      <LogOut className="h-4 w-4" />
-                      Logout
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => {
-                        setIsLoggedIn(true);
-                        setIsMobileOpen(false);
-                      }}
-                      className="w-full mt-2 text-white hover:text-blue-400 py-2"
-                    >
-                      Login
-                    </button>
-                  )}
                   <button className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full font-semibold">
                     Book Now
                   </button>

@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Star, Calendar, Users, Award, ArrowRight, Play } from "lucide-react";
-import Footer from "@/components/Footer";
+import { Calendar, Users, Award, ArrowRight, Play } from "lucide-react";
 import celebrities from "@/utils/celebrities";
 import CelebCard from "@/components/CelebCard";
 import CelebrityModal from "@/components/CelebModal";
@@ -30,13 +29,13 @@ export default function CelebrityBookingLanding() {
   };
 
   // ✅ Disable body scroll when modal is open
-  useEffect(() => {
-    if (selectedCeleb) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-  }, [selectedCeleb]);
+  // useEffect(() => {
+  //   if (selectedCeleb) {
+  //     document.body.style.overflow = "hidden";
+  //   } else {
+  //     document.body.style.overflow = "";
+  //   }
+  // }, [selectedCeleb]);
 
   const steps = [
     {
@@ -92,10 +91,17 @@ export default function CelebrityBookingLanding() {
 
   return (
     <div className="min-h-screen w-screen overflow-hidden bg-black">
-
       {/* Hero Section */}
-      <section className="relative pt-20 pb-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 to-black/40"></div>
+      <section
+        className="relative pt-20 pb-32 overflow-hidden bg-cover md:bg-center "
+        style={{
+          backgroundImage: "url('/louis_ck.png')",
+          backgroundPosition: "88% center",
+        }}
+      >
+        {/* Gradient Overlay: Transparent to Black at Bottom */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.2)_5%,rgba(0,0,0,1)_95%)]"></div>
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-6xl md:text-8xl font-bold text-white mb-6 leading-tight">
             Book <span className="text-blue-400">Celebrity</span> <br /> Talent
@@ -297,7 +303,6 @@ export default function CelebrityBookingLanding() {
           </>
         )}
       </AnimatePresence>
-      <Footer />
     </div>
   );
 }
