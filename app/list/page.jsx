@@ -57,6 +57,11 @@ const CelebritiesPage = () => {
     setCurrentPage(1);
   };
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    console.log("Current page:", page);
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       {/* Search Input */}
@@ -120,10 +125,10 @@ const CelebritiesPage = () => {
           size="lg"
           showControls
           showShadow
-          variant="flat"
+          variant="bordered"
           initialPage={currentPage}
           total={totalPages}
-          onChange={(page) => setCurrentPage(page)}
+          onChange={handlePageChange}
         />
       </div>
     </div>
