@@ -16,23 +16,6 @@ const AnimatedPagination = ({ total, onChange }) => {
 
   return (
     <div className="mt-10 flex flex-col items-center gap-4">
-      {/* Animated current page number */}
-      <div className="h-10 w-10 relative overflow-hidden text-xl font-semibold text-blue-600">
-        <AnimatePresence initial={false} custom={direction}>
-          <motion.div
-            key={currentPage}
-            custom={direction}
-            initial={{ y: direction > 0 ? 20 : -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: direction > 0 ? -20 : 20, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="absolute inset-0 flex items-center justify-center"
-          >
-            {currentPage}
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
       {/* Pagination buttons */}
       <div className="flex gap-2">
         <button
