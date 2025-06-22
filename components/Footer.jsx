@@ -8,7 +8,8 @@ const Footer = () => {
       className="bg-black/80 backdrop-blur-sm py-12 border-t border-gray-700"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-4 gap-8">
+        <div className="grid gap-8 md:grid-cols-4">
+          {/* About Section */}
           <div>
             <div className="flex items-center space-x-2 mb-4">
               <Star className="h-6 w-6 text-blue-400" />
@@ -18,24 +19,30 @@ const Footer = () => {
               The premier platform for booking celebrity talent for your events.
             </p>
           </div>
-          <div>
-            <h3 className="text-white font-semibold mb-4">Services</h3>
-            <ul className="space-y-2 text-gray-400">
-              <li>Celebrity Booking</li>
-              <li>Event Planning</li>
-              <li>Talent Management</li>
-              <li>Contract Negotiation</li>
-            </ul>
+
+          {/* Services + Categories (Side by side on small screens) */}
+          <div className="col-span-2 grid grid-cols-2 gap-8 md:col-span-2">
+            <div>
+              <h3 className="text-white font-semibold mb-4">Services</h3>
+              <ul className="space-y-2 text-gray-400">
+                <li>Celebrity Booking</li>
+                <li>Event Planning</li>
+                <li>Talent Management</li>
+                <li>Contract Negotiation</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-white font-semibold mb-4">Categories</h3>
+              <ul className="space-y-2 text-gray-400">
+                <li>Musicians</li>
+                <li>Comedians</li>
+                <li>Speakers</li>
+                <li>Actors</li>
+              </ul>
+            </div>
           </div>
-          <div>
-            <h3 className="text-white font-semibold mb-4">Categories</h3>
-            <ul className="space-y-2 text-gray-400">
-              <li>Musicians</li>
-              <li>Comedians</li>
-              <li>Speakers</li>
-              <li>Actors</li>
-            </ul>
-          </div>
+
+          {/* Contact Section */}
           <div>
             <h3 className="text-white font-semibold mb-4">Contact</h3>
             <div className="space-y-2 text-gray-400">
@@ -54,6 +61,8 @@ const Footer = () => {
             </div>
           </div>
         </div>
+
+        {/* Footer Bottom */}
         <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
           <p>&copy; 2025 StarBook. All rights reserved.</p>
         </div>
@@ -61,4 +70,5 @@ const Footer = () => {
     </footer>
   );
 };
+
 export default Footer;
