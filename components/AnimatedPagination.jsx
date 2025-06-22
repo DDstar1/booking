@@ -20,10 +20,10 @@ const AnimatedPagination = ({ total, onChange }) => {
       <div className="flex gap-2">
         <button
           onClick={() => handlePageChange(currentPage - 1)}
-          className="px-3 py-1 rounded border border-gray-300 text-sm hover:bg-gray-100"
+          className="px-3 py-1 rounded border border-gray-300 text-sm hover:bg-gray-100 disabled:opacity-50"
           disabled={currentPage === 1}
         >
-          Prev
+          &lt;
         </button>
 
         {Array.from({ length: total }, (_, i) => i + 1).map((num) => (
@@ -42,10 +42,10 @@ const AnimatedPagination = ({ total, onChange }) => {
 
         <button
           onClick={() => handlePageChange(currentPage + 1)}
-          className="px-3 py-1 rounded border border-gray-300 text-sm hover:bg-gray-100"
+          className="px-3 py-1 rounded border border-gray-300 text-sm hover:bg-gray-100 disabled:opacity-50"
           disabled={currentPage === total}
         >
-          Next
+          &gt;
         </button>
       </div>
     </div>
