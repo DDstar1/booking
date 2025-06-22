@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import CelebCard from "@/components/CelebCard";
 import celebrities from "@/utils/celebrities";
 import { Pagination } from "@heroui/react";
+import AnimatedPagination from "@/components/AnimatedPagination";
 
 const collapseVariants = {
   expanded: {
@@ -120,7 +121,7 @@ const CelebritiesPage = () => {
 
       {/* Pagination (HeroUI) */}
       <div className="mt-10 flex justify-center">
-        <Pagination
+        {/* <Pagination
           color="primary"
           size="lg"
           showControls
@@ -129,6 +130,10 @@ const CelebritiesPage = () => {
           initialPage={currentPage}
           total={totalPages}
           onChange={handlePageChange}
+        /> */}
+        <AnimatedPagination
+          total={totalPages}
+          onChange={(page) => setCurrentPage(page)}
         />
       </div>
     </div>
