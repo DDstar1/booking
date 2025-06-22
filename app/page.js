@@ -4,8 +4,12 @@ import { useState, useEffect } from "react";
 import { Calendar, Users, Award, ArrowRight, Play } from "lucide-react";
 import celebrities from "@/utils/celebrities";
 import CelebCard from "@/components/CelebCard";
-import CelebrityModal from "@/components/CelebModal";
+import CelebModalWrapper from "@/components/CelebModal";
 import { motion, AnimatePresence } from "framer-motion";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { EffectCards } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/effect-cards";
 
 export default function CelebrityBookingLanding() {
   const [selectedCeleb, setSelectedCeleb] = useState(null);
@@ -143,17 +147,18 @@ export default function CelebrityBookingLanding() {
               Featured <span className="text-blue-400">Celebrities</span>
             </h2>
           </center>
-          <div className="grid p-2 w-full gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
+          <Swiper
+            effect="cards"
+            grabCursor={true}
+            modules={[EffectCards]}
+            className="w-[85%] max-w-sm mx-auto"
+          >
             {celebrities.map((celeb, index) => (
-              <div
-                key={index}
-                onClick={(e) => handleClick(celeb, e)}
-                className="cursor-pointer"
-              >
+              <SwiperSlide key={index} onClick={(e) => handleClick(celeb, e)}>
                 <CelebCard celeb={celeb} />
-              </div>
+              </SwiperSlide>
             ))}
-          </div>
+          </Swiper>
         </div>
       </section>
 
@@ -248,59 +253,15 @@ export default function CelebrityBookingLanding() {
       {/* AnimatePresence handles mount/unmount transitions */}
       <AnimatePresence>
         {selectedCeleb && origin && (
-          <>
-            {/* ✅ Blurred dark background overlay */}
-            <motion.div
-              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={closeModal}
-            />
-
-            {/* ✅ Modal that scales from the clicked card position */}
-            <motion.div
-              className="fixed z-50"
-              initial={{
-                top: origin.y,
-                left: origin.x,
-                width: origin.width,
-                height: origin.height,
-                opacity: 0,
-                scale: 0.8,
-              }}
-              animate={{
-                top: "50%",
-                left: "50%",
-                x: "-50%",
-                y: "-50%",
-                width: "100vw",
-                height: "auto",
-                opacity: 1,
-                scale: 1,
-                transition: { type: "spring", stiffness: 300, damping: 30 },
-              }}
-              exit={{
-                top: origin.y,
-                left: origin.x,
-                width: origin.width,
-                height: origin.height,
-                opacity: 0,
-                scale: 0.8,
-                transition: { duration: 0.3 },
-              }}
-            >
-              <div className="relative">
-                <CelebrityModal celeb_data={selectedCeleb} />
-                <button
-                  onClick={closeModal}
-                  className="absolute -top-10 w-7 h-7 right-2 bg-white text-black rounded-full text-sm font-bold z-50"
-                >
-                  ✕
-                </button>
-              </div>
-            </motion.div>
-          </>
+          <AnimatePresence>
+            {selectedCeleb && origin && (
+              <CelebModalWrapper
+                celeb_data={selectedCeleb}
+                origin={origin}
+                closeModal={closeModal}
+              />
+            )}
+          </AnimatePresence>
         )}
       </AnimatePresence>
     </div>

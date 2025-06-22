@@ -46,9 +46,15 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Hero */}
-      <section className="pt-20 pb-16">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6">
+      <section
+        className="relative pt-20 pb-16 bg-cover bg-center"
+        style={{ backgroundImage: "url('/assisant.jpg')" }}
+      >
+        {/* Optional Gradient Overlay */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.4)_10%,rgba(0,0,0,1)_90%)] pointer-events-none"></div>
+
+        <div className="relative max-w-7xl mx-auto px-4 text-center">
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white">
             Get In <span className="text-blue-400">Touch</span>
           </h1>
           <p className="text-xl text-gray-300 mb-8">
@@ -242,22 +248,15 @@ export default function ContactPage() {
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4">
           <div className="relative h-96 rounded-2xl overflow-hidden border border-gray-700">
-            <img
-              src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=1200&h=400&fit=crop"
-              alt="Map showing office location"
-              className="w-full h-full object-cover"
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11655.503600234755!2d-79.3642093202399!3d43.086104320393694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d34cc67db54b1b%3A0x39c9ba49817d78a0!2sOntario%20Stallions%20for%20the%20Ontario%20Horseman%20Incentive!5e0!3m2!1sen!2sng!4v1750591743146!5m2!1sen!2sng"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
             />
-            <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-              <div className="bg-blue-600 p-4 rounded-full animate-pulse">
-                <MapPin className="h-8 w-8 text-white" />
-              </div>
-            </div>
-            <div className="absolute bottom-4 left-4 bg-black/80 text-white p-4 rounded-lg">
-              <h3 className="font-bold">Our Office</h3>
-              <p className="text-sm text-gray-300">
-                123A Hughes Estate, Monita
-              </p>
-            </div>
           </div>
         </div>
       </section>

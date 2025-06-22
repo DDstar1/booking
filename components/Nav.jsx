@@ -22,21 +22,28 @@ const navVariants = {
 const Navigation = () => {
   const [showNav, setShowNav] = useState(true);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const currentY = window.scrollY;
-      setShowNav(currentY < 80 || currentY < lastScrollY);
-      setLastScrollY(currentY);
-    };
+    let lastScrollY = window.scrollY;
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+    // const handleScroll = () => {
+    //   const currentY = window.scrollY;
+
+    //   // Show nav if: at top of page OR scrolling up
+    //   const shouldShow = currentY < 80 || currentY < lastScrollY - 50;
+
+    //   console.log(`Scroll => Current: ${currentY}, Last: ${lastScrollY}`);
+
+    //   setShowNav(shouldShow);
+    //   lastScrollY = currentY;
+    // };
+
+    // window.addEventListener("scroll", handleScroll, { passive: true });
+    // return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const links = [
-    { label: "Celebrity List", href: "#celebrities" },
+    { label: "Celebrity List", href: "/list" },
     { label: "Featured Celebrities", href: "#featured_celebrities" },
     { label: "About Us", href: "/about_us" },
     { label: "Contact Us", href: "/contact_us" },
@@ -51,7 +58,7 @@ const Navigation = () => {
           animate="visible"
           exit="exit"
           variants={navVariants}
-          className="fixed top-0 w-full bg-black/80 backdrop-blur-md z-50 border-b border-gray-700"
+          className="sticky top-0 w-full bg-black/80 backdrop-blur-md z-50 border-b border-gray-700"
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
