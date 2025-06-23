@@ -38,7 +38,7 @@ const CelebModalWrapper = ({ celeb_data, origin, closeModal }) => {
     <>
       {/* Overlay */}
       <motion.div
-        className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
+        className="fixed inset-0 bg-black/40 backdrop-blur-sm z-60"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -47,7 +47,7 @@ const CelebModalWrapper = ({ celeb_data, origin, closeModal }) => {
 
       {/* Modal */}
       <motion.div
-        className="fixed z-50"
+        className="fixed z-70"
         initial={{
           top: origin.y,
           left: origin.x,
@@ -78,7 +78,7 @@ const CelebModalWrapper = ({ celeb_data, origin, closeModal }) => {
         }}
       >
         {/* Modal Content */}
-        <div className="relative w-full bg-black/60 rounded-2xl overflow-hidden shadow-xl backdrop-blur-md">
+        <div className="relative w-full  bg-black/60 rounded-2xl md:max-w-[400px] mx-auto overflow-hidden shadow-xl backdrop-blur-md">
           {/* Close Button */}
           <button
             onClick={closeModal}
@@ -92,7 +92,7 @@ const CelebModalWrapper = ({ celeb_data, origin, closeModal }) => {
             <img
               src={celeb_data.image}
               alt={celeb_data.name}
-              className="w-full h-48 sm:h-72 object-cover"
+              className="w-full sm:h-72 object-cover"
             />
             <div className="absolute w-full p-3 flex bg-gradient-to-b from-black/80 to-transparent items-center justify-between top-0 text-white">
               <div className="flex items-center space-x-3">
