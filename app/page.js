@@ -253,15 +253,11 @@ export default function CelebrityBookingLanding() {
       {/* AnimatePresence handles mount/unmount transitions */}
       <AnimatePresence>
         {selectedCeleb && origin && (
-          <AnimatePresence>
-            {selectedCeleb && origin && (
-              <CelebModalWrapper
-                celeb_data={selectedCeleb}
-                origin={origin}
-                closeModal={closeModal}
-              />
-            )}
-          </AnimatePresence>
+          <CelebModalWrapper
+            celeb_data={selectedCeleb}
+            origin={origin}
+            closeModal={closeModal}
+          />
         )}
       </AnimatePresence>
     </div>

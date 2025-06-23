@@ -1,7 +1,12 @@
 import Image from "next/image";
 
-const CelebCard = ({ celeb }) => (
-  <div className="bg-white relative rounded-2xl shadow-lg overflow-hidden w-full aspect-square">
+const CelebCard = ({ celeb, onClick }) => (
+  <div
+    onClick={onClick}
+    className={`bg-white relative rounded-2xl shadow-lg overflow-hidden w-full aspect-square ${
+      onClick ? "cursor-pointer" : ""
+    }`}
+  >
     <img
       src={celeb.image}
       alt={celeb.name}

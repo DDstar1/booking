@@ -6,6 +6,8 @@ import CelebCard from "@/components/CelebCard";
 import celebrities from "@/utils/celebrities";
 import { Pagination } from "@heroui/react";
 import AnimatedPagination from "@/components/AnimatedPagination";
+import { AnimatePresence } from "framer-motion";
+import CelebModalWrapper from "@/components/CelebModal";
 
 const collapseVariants = {
   expanded: {
@@ -22,8 +24,29 @@ const CelebritiesPage = () => {
   const [search, setSearch] = useState("");
   const [activeTags, setActiveTags] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [showFilters, setShowFilters] = useState(true);
+  const [showFilters, setShowFilters] = useState(false);
+  const [selectedCeleb, setSelectedCeleb] = useState(null);
+  const [origin, setOrigin] = useState(null);
   const itemsPerPage = 6;
+
+  const handleClick = (celeb, e) => {
+    alert("Clicked on " + celeb.name);
+    const rect = e.currentTarget.getBoundingClientRect();
+    setOrigin({
+      x: rect.left,
+      y: rect.top,
+      width: rect.width,
+      height: rect.height,
+    });
+    setSelectedCeleb(celeb);
+    console.log("Selected celebrity:", celeb);
+    console.log("Origin for modal:", origin);
+  };
+
+  const closeModal = () => {
+    setSelectedCeleb(null);
+    setOrigin(null);
+  };
 
   const allTags = useMemo(() => {
     const tags = new Set();
@@ -64,64 +87,69 @@ const CelebritiesPage = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      {/* Search Input */}
-      <input
-        type="text"
-        value={search}
-        onChange={(e) => {
-          setSearch(e.target.value);
-          setCurrentPage(1);
-        }}
-        placeholder="Search celebrities..."
-        className="w-full p-2 mb-4 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
+    <>
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        {/* Search Input */}
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setCurrentPage(1);
+          }}
+          placeholder="Search celebrities..."
+          className="w-full p-2 mb-4 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
 
-      {/* Toggle Filters Button */}
-      <div className="flex justify-between items-center mb-2">
-        <h3 className="text-lg font-semibold">Filter by Tags</h3>
-        <button
-          onClick={() => setShowFilters((prev) => !prev)}
-          className="text-sm text-blue-600 underline"
-        >
-          {showFilters ? "Collapse" : "Expand"}
-        </button>
-      </div>
-
-      {/* Animated Filter Tags */}
-      <motion.div
-        variants={collapseVariants}
-        animate={showFilters ? "expanded" : "collapsed"}
-        initial={false}
-        className={`overflow-hidden mb-6 ${
-          showFilters ? "flex flex-wrap gap-2" : "flex gap-2 overflow-x-auto"
-        }`}
-      >
-        {allTags.map((tag) => (
+        {/* Toggle Filters Button */}
+        <div className="flex justify-between items-center mb-2">
+          <h3 className="text-lg font-semibold">Filter by Tags</h3>
           <button
-            key={tag}
-            onClick={() => handleTagClick(tag)}
-            className={`px-3 py-1 whitespace-nowrap rounded-full border text-sm flex-shrink-0 ${
-              activeTags.includes(tag)
-                ? "bg-blue-600 text-white"
-                : "bg-gray-100 text-gray-800"
-            }`}
+            onClick={() => setShowFilters((prev) => !prev)}
+            className="text-sm text-blue-600 underline"
           >
-            {tag}
+            {showFilters ? "Collapse" : "Expand"}
           </button>
-        ))}
-      </motion.div>
+        </div>
 
-      {/* Celebrity Cards Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {paginatedCelebs.map((celeb) => (
-          <CelebCard key={celeb.id} celeb={celeb} />
-        ))}
-      </div>
+        {/* Animated Filter Tags */}
+        <motion.div
+          variants={collapseVariants}
+          animate={showFilters ? "expanded" : "collapsed"}
+          initial={false}
+          className={`overflow-hidden mb-6 ${
+            showFilters ? "flex flex-wrap gap-2" : "flex gap-2 overflow-x-auto"
+          }`}
+        >
+          {allTags.map((tag) => (
+            <button
+              key={tag}
+              onClick={() => handleTagClick(tag)}
+              className={`px-3 py-1 whitespace-nowrap rounded-full border text-sm flex-shrink-0 ${
+                activeTags.includes(tag)
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-100 text-gray-800"
+              }`}
+            >
+              {tag}
+            </button>
+          ))}
+        </motion.div>
 
-      {/* Pagination (HeroUI) */}
-      <div className="mt-10 flex justify-center">
-        {/* <Pagination
+        {/* Celebrity Cards Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 min-h-[75vh] overflow-y-auto">
+          {paginatedCelebs.map((celeb) => (
+            <CelebCard
+              onClick={(e) => handleClick(celeb, e)}
+              key={celeb.id}
+              celeb={celeb}
+            />
+          ))}
+        </div>
+
+        {/* Pagination (HeroUI) */}
+        <div className="flex justify-center  sticky bottom-1 ">
+          {/* <Pagination
           color="primary"
           size="lg"
           showControls
@@ -131,12 +159,23 @@ const CelebritiesPage = () => {
           total={totalPages}
           onChange={handlePageChange}
         /> */}
-        <AnimatedPagination
-          total={totalPages}
-          onChange={(page) => setCurrentPage(page)}
-        />
+          <AnimatedPagination
+            total={totalPages}
+            onChange={(page) => setCurrentPage(page)}
+          />
+        </div>
       </div>
-    </div>
+      {/* AnimatePresence handles mount/unmount transitions */}
+      <AnimatePresence>
+        {selectedCeleb && origin && (
+          <CelebModalWrapper
+            celeb_data={selectedCeleb}
+            origin={origin}
+            closeModal={closeModal}
+          />
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
