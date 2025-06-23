@@ -30,7 +30,6 @@ const CelebritiesPage = () => {
   const itemsPerPage = 6;
 
   const handleClick = (celeb, e) => {
-    alert("Clicked on " + celeb.name);
     const rect = e.currentTarget.getBoundingClientRect();
     setOrigin({
       x: rect.left,
@@ -39,8 +38,6 @@ const CelebritiesPage = () => {
       height: rect.height,
     });
     setSelectedCeleb(celeb);
-    console.log("Selected celebrity:", celeb);
-    console.log("Origin for modal:", origin);
   };
 
   const closeModal = () => {
