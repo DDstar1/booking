@@ -97,7 +97,7 @@ export default function CelebrityBookingLanding() {
     <div className="min-h-screen w-screen overflow-hidden bg-black">
       {/* Hero Section */}
       <section
-        className="relative pt-20 pb-32 overflow-hidden bg-cover md:bg-center "
+        className="relative pt-24 pb-32 overflow-hidden bg-cover md:bg-center "
         style={{
           backgroundImage: "url('/louis_ck.png')",
           backgroundPosition: "88% center",

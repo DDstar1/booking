@@ -3,10 +3,13 @@ export default function AboutPage() {
     <div className="bg-black text-white min-h-screen">
       {/* Hero Section */}
       <div
-        className="relative h-72 bg-cover bg-center"
+        className="relative bg-cover bg-center flex flex-col items-center justify-center min-h-[400px]"
         style={{ backgroundImage: "url('/band.jpg')" }}
       >
-        <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+        {/* Optional Gradient Overlay */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.1)_10%,rgba(0,0,0,1)_90%)] pointer-events-none"></div>
+
+        <div className="absolute flex items-center justify-center">
           <div className="text-center px-4">
             <h1 className="text-4xl font-bold">About Our</h1>
             <p className="text-4xl text-yellow-400 font-signature mt-2">

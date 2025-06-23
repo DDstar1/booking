@@ -10,6 +10,7 @@ import {
   MessageCircle,
   CheckCircle,
 } from "lucide-react";
+import MapToggleGallery from "@/components/MapToggleGallery";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -47,7 +48,7 @@ export default function ContactPage() {
     <div className="min-h-screen bg-black text-white">
       {/* Hero */}
       <section
-        className="relative pt-20 pb-16 bg-cover bg-center"
+        className="relative flex flex-col items-center justify-center min-h-[400px] bg-cover bg-center"
         style={{ backgroundImage: "url('/assisant.jpg')" }}
       >
         {/* Optional Gradient Overlay */}
@@ -245,21 +246,14 @@ export default function ContactPage() {
       </section>
 
       {/* Map */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="relative h-96 rounded-2xl overflow-hidden border border-gray-700">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11655.503600234755!2d-79.3642093202399!3d43.086104320393694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d34cc67db54b1b%3A0x39c9ba49817d78a0!2sOntario%20Stallions%20for%20the%20Ontario%20Horseman%20Incentive!5e0!3m2!1sen!2sng!4v1750591743146!5m2!1sen!2sng"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen=""
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-          </div>
-        </div>
-      </section>
+      <MapToggleGallery
+        iframeSrc="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11655.503600234755!2d-79.3642093202399!3d43.086104320393694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d34cc67db54b1b%3A0x39c9ba49817d78a0!2sOntario%20Stallions%20for%20the%20Ontario%20Horseman%20Incentive!5e0!3m2!1sen!2sng!4v1750591743146!5m2!1sen!2sng"
+        imageList={[
+          "/images/building1.jpg",
+          "/images/building2.jpg",
+          "/images/building3.jpg",
+        ]}
+      />
 
       {/* CTA */}
       <section className="py-20 bg-gradient-to-r from-blue-600/20 to-purple-600/20">

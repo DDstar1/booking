@@ -22,25 +22,18 @@ const navVariants = {
 const Navigation = () => {
   const [showNav, setShowNav] = useState(true);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
-    let lastScrollY = window.scrollY;
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      setShowNav(currentY < 80 || currentY < lastScrollY);
+      setLastScrollY(currentY);
+    };
 
-    // const handleScroll = () => {
-    //   const currentY = window.scrollY;
-
-    //   // Show nav if: at top of page OR scrolling up
-    //   const shouldShow = currentY < 80 || currentY < lastScrollY - 50;
-
-    //   console.log(`Scroll => Current: ${currentY}, Last: ${lastScrollY}`);
-
-    //   setShowNav(shouldShow);
-    //   lastScrollY = currentY;
-    // };
-
-    // window.addEventListener("scroll", handleScroll, { passive: true });
-    // return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
 
   const links = [
     { label: "Celebrity List", href: "/list" },
@@ -58,7 +51,7 @@ const Navigation = () => {
           animate="visible"
           exit="exit"
           variants={navVariants}
-          className="sticky top-0 w-full bg-black/80 backdrop-blur-md z-50 border-b border-gray-700"
+          className="fixed top-0 w-full bg-black/80 backdrop-blur-md z-50 border-b border-gray-700"
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
