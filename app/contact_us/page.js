@@ -249,9 +249,10 @@ export default function ContactPage() {
       <MapToggleGallery
         iframeSrc="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11655.503600234755!2d-79.3642093202399!3d43.086104320393694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d34cc67db54b1b%3A0x39c9ba49817d78a0!2sOntario%20Stallions%20for%20the%20Ontario%20Horseman%20Incentive!5e0!3m2!1sen!2sng!4v1750591743146!5m2!1sen!2sng"
         imageList={[
-          "/images/building1.jpg",
-          "/images/building2.jpg",
-          "/images/building3.jpg",
+          "https://swiperjs.com/demos/images/nature-1.jpg",
+          "https://swiperjs.com/demos/images/nature-2.jpg",
+          "https://swiperjs.com/demos/images/nature-3.jpg",
+          "https://swiperjs.com/demos/images/nature-4.jpg",
         ]}
       />
 

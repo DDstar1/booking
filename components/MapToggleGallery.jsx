@@ -1,13 +1,24 @@
 "use client";
 import { useState } from "react";
 import { Map, Image as ImageIcon } from "lucide-react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { EffectCube, Pagination } from "swiper/modules";
+
+// Swiper styles
+import "swiper/css";
+import "swiper/css/effect-cube";
+import "swiper/css/pagination";
 
 const MapToggleGallery = ({ iframeSrc, imageList = [] }) => {
   const [showMap, setShowMap] = useState(true);
 
   return (
     <section className="py-16">
-      <div className="max-w-7xl mx-auto px-4">
+      <div
+        className={`mx-auto px-4 transition-all duration-500 ${
+          showMap ? "max-w-full" : "max-w-xl"
+        }`}
+      >
         <div className="flex justify-end mb-4">
           <button
             onClick={() => setShowMap((prev) => !prev)}
@@ -35,20 +46,29 @@ const MapToggleGallery = ({ iframeSrc, imageList = [] }) => {
               className="w-full h-full"
             />
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 p-4 overflow-y-auto h-full">
+            <Swiper
+              effect="cube"
+              grabCursor={true}
+              cubeEffect={{
+                shadow: true,
+                slideShadows: true,
+                shadowOffset: 20,
+                shadowScale: 0.94,
+              }}
+              pagination={{ clickable: true }}
+              modules={[EffectCube, Pagination]}
+              className="w-full h-full"
+            >
               {imageList.map((src, idx) => (
-                <div
-                  key={idx}
-                  className="aspect-square w-full rounded-xl overflow-hidden border border-gray-600"
-                >
+                <SwiperSlide key={idx}>
                   <img
                     src={src}
                     alt={`Building ${idx + 1}`}
-                    className="object-cover w-full h-full"
+                    className="w-full h-full object-cover rounded-2xl"
                   />
-                </div>
+                </SwiperSlide>
               ))}
-            </div>
+            </Swiper>
           )}
         </div>
       </div>
