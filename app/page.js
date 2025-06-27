@@ -2,62 +2,35 @@
 
 import { useState, useEffect } from "react";
 import { Calendar, Users, Award, ArrowRight, Play } from "lucide-react";
-import celebrities from "@/utils/celebrities";
-import CelebCard from "@/components/CelebCard";
-import CelebModalWrapper from "@/components/CelebModal";
+import { BackgroundBeams } from "@/components/ui/BackgroundBeam"; // Assuming you have a BackgroundBeams component
+
 import { motion, AnimatePresence } from "framer-motion";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectCards } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/effect-cards";
+
+import { LampDemo } from "@/components/Featured_celebs"; // Assuming you have a LampDemo component
+import { HoverBorderGradient } from "@/components/ui/HoverBorderGradient"; // Assuming you have a HoverBorderGradient component
+import { SparklesCore } from "@/components/ui/SparklesCore"; // Assuming you have a SparklesCore component
+import ShinyUnderline from "@/components/ShinyUnderline";
 
 export default function CelebrityBookingLanding() {
-  const [selectedCeleb, setSelectedCeleb] = useState(null);
-  const [origin, setOrigin] = useState(null);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
-
-  const handleClick = (celeb, e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setOrigin({
-      x: rect.left,
-      y: rect.top,
-      width: rect.width,
-      height: rect.height,
-    });
-    setSelectedCeleb(celeb);
-  };
-
-  const closeModal = () => {
-    setSelectedCeleb(null);
-    setOrigin(null);
-  };
-
-  // ✅ Disable body scroll when modal is open
-  // useEffect(() => {
-  //   if (selectedCeleb) {
-  //     document.body.style.overflow = "hidden";
-  //   } else {
-  //     document.body.style.overflow = "";
-  //   }
-  // }, [selectedCeleb]);
 
   const steps = [
     {
       title: "1. Browse & Select",
       description:
-        "Browse our extensive catalog of verified celebrities and select the perfect talent for your event.",
+        "Explore our exclusive catalog of verified stars—speakers, musicians, icons—just a click away.",
       icon: <Users className="h-8 w-8 text-white" />,
     },
     {
       title: "2. Book & Confirm",
       description:
-        "Submit your booking request with event details. We'll handle all negotiations and contracts.",
+        "Send your request. We'll handle contracts, logistics, and all the behind-the-scenes magic.",
       icon: <Calendar className="h-8 w-8 text-white" />,
     },
     {
       title: "3. Enjoy Your Event",
       description:
-        "Relax and enjoy your unforgettable event while we ensure everything runs smoothly.",
+        "Sit back and enjoy the spotlight—we ensure every detail shines on your big day.",
       icon: <Award className="h-8 w-8 text-white" />,
     },
   ];
@@ -95,132 +68,161 @@ export default function CelebrityBookingLanding() {
 
   return (
     <div className="min-h-screen w-screen overflow-hidden bg-black">
-      {/* Hero Section */}
+      {/* HERO */}
       <section
-        className="relative pt-24 pb-32 overflow-hidden bg-cover md:bg-center "
+        className="relative pt-24 h-screen pb-32 overflow-hidden bg-cover md:bg-center"
         style={{
           backgroundImage: "url('/louis_ck.png')",
           backgroundPosition: "88% center",
         }}
       >
-        {/* Gradient Overlay: Transparent to Black at Bottom */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.2)_5%,rgba(0,0,0,1)_95%)]"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black"></div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-6xl md:text-8xl font-bold text-white mb-6 leading-tight">
-            Book <span className="text-blue-400">Celebrity</span> <br /> Talent
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
-            Connect with A-list celebrities, speakers, and performers for your
-            next unforgettable event
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
+        <div className="relative max-w-7xl mx-auto px-4 text-center">
+          <motion.h1
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-6xl md:text-8xl font-bold text-white mb-6 leading-tight"
+          >
+            Book <span className="text-blue-400">Celebrity</span> Talent
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto"
+          >
+            Secure iconic talent for unforgettable moments—corporate, personal,
+            or once-in-a-lifetime events.
+          </motion.p>
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
+          >
+            <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all transform flex items-center justify-center">
               Browse Celebrities <ArrowRight className="ml-2 h-5 w-5" />
             </button>
-            <button className="border-2 border-gray-700 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-800/50 transition-all duration-300 flex items-center justify-center">
-              <Play className="mr-2 h-5 w-5" /> Watch Demo
-            </button>
-          </div>
-          <div className="flex justify-center space-x-8 text-gray-400">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-white">1000+</div>
-              <div className="text-sm">Celebrities</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-white">50K+</div>
-              <div className="text-sm">Events Booked</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-white">4.9★</div>
-              <div className="text-sm">Rating</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Celebrities */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <center>
-            <h2 className="text-4xl font-bold text-white text-center mb-16  border-t-4 py-3 w-11/12 border-b-4 border-gray-600">
-              Featured <span className="text-blue-400">Celebrities</span>
-            </h2>
-          </center>
-          <Swiper
-            effect="cards"
-            grabCursor={true}
-            modules={[EffectCards]}
-            className="w-[85%] max-w-sm mx-auto"
+          </motion.div>
+          <motion.div
+            className="flex justify-center space-x-8 text-gray-400"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
           >
-            {celebrities.map((celeb, index) => (
-              <SwiperSlide key={index} onClick={(e) => handleClick(celeb, e)}>
-                <CelebCard celeb={celeb} />
-              </SwiperSlide>
+            {[
+              { label: "Celebrities", value: "1000+" },
+              { label: "Events Booked", value: "50K+" },
+              { label: "Rating", value: "4.9★" },
+            ].map((stat, idx) => (
+              <div key={idx} className="text-center">
+                <div className="text-3xl font-bold text-white">
+                  {stat.value}
+                </div>
+                <div className="text-sm">{stat.label}</div>
+              </div>
             ))}
-          </Swiper>
+          </motion.div>
         </div>
       </section>
+      {/* FEATURED CELEBRITIES */}
+      <LampDemo />
+      {/* HOW IT WORKS */}
+      <section className="relative md:min-h-screen py-32 bg-black/40 overflow-hidden">
+        <BackgroundBeams className="pointer-events-none z-0" />
 
-      {/* How It Works */}
-      <section className="py-20 bg-black/40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-white text-center mb-16">
+        <div className="relative z-10 max-w-7xl mx-auto px-4">
+          <h2 className="text-4xl font-bold text-white text-center mb-8">
             How It <span className="text-blue-400">Works</span>
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
-            {steps.map((step, index) => (
-              <div key={index} className="text-center">
-                <div className="bg-blue-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-                  {step.icon}
+          <div className="relative pt-8">
+            <ShinyUnderline />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+            {steps.map((step, i) => (
+              <HoverBorderGradient
+                key={i}
+                containerClassName="rounded-xl"
+                as="div"
+                className="dark:bg-black bg-white text-black dark:text-white "
+              >
+                <div className="text-center bg-gray-900/50 rounded-xl p-6 border border-gray-700 transition-transform duration-300 hover:scale-[1.03]">
+                  <div className="bg-blue-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 shadow-md">
+                    {step.icon}
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2">
+                    {step.title}
+                  </h3>
+                  <p className="text-gray-300">{step.description}</p>
                 </div>
-                <h3 className="text-xl font-bold text-white mb-4">
-                  {step.title}
-                </h3>
-                <p className="text-gray-300 text-left">{step.description}</p>
-              </div>
+              </HoverBorderGradient>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-white text-center mb-16">
+      {/* TESTIMONIALS */}
+      <section className=" relative py-20">
+        <div className="max-w-4xl mx-auto  px-4 text-center">
+          <h2 className="text-4xl font-bold text-white mb-3">
             What Our <span className="text-blue-400">Clients Say</span>
           </h2>
-          <div className="relative h-64">
-            {testimonials.map((t, i) => (
-              <div
-                key={i}
-                className={`absolute inset-0 transition-all duration-500 ${
-                  i === currentTestimonial
-                    ? "opacity-100 translate-x-0"
-                    : "opacity-0 translate-x-full"
-                }`}
-              >
-                <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 text-center border border-gray-700">
-                  <img
-                    src={t.image}
-                    alt={t.name}
-                    className="w-16 h-16 rounded-full mx-auto mb-6 object-cover"
-                  />
-                  <p className="text-gray-300 text-lg mb-6 italic">
-                    "{t.text}"
-                  </p>
-                  <h4 className="text-white font-bold">{t.name}</h4>
-                  <p className="text-blue-400 text-sm">{t.company}</p>
-                </div>
-              </div>
-            ))}
+          <div className="relative pt-8">
+            <div className="w-full h-40 absolute top-0">
+              {/* Gradients */}
+              <ShinyUnderline />
+
+              {/* Core component */}
+              <SparklesCore
+                background="transparent"
+                minSize={0.4}
+                maxSize={1}
+                particleDensity={1200}
+                className="w-full h-full "
+                particleColor="#FFFFFF"
+              />
+
+              {/* Radial Gradient to prevent sharp edges */}
+              <div className="absolute inset-0 w-full h-full bg-black [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"></div>
+            </div>
+          </div>
+          <div className="relative h-72">
+            <AnimatePresence>
+              {testimonials.map(
+                (t, i) =>
+                  i === currentTestimonial && (
+                    <motion.div
+                      key={i}
+                      className="absolute inset-0"
+                      initial={{ opacity: 0, x: 50 }}
+                      animate={{ opacity: 0.8, x: 0 }}
+                      exit={{ opacity: 0, x: -50 }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      <div className="bg-gray-800/50 backdrop-blur-md rounded-2xl p-8 text-center border border-gray-700">
+                        <img
+                          src={t.image}
+                          alt={t.name}
+                          className="w-16 h-16 rounded-full mx-auto mb-6 object-cover"
+                        />
+                        <p className="text-gray-300 text-lg mb-6 italic">
+                          "{t.text}"
+                        </p>
+                        <h4 className="text-white font-bold">{t.name}</h4>
+                        <p className="text-blue-400 text-sm">{t.company}</p>
+                      </div>
+                    </motion.div>
+                  )
+              )}
+            </AnimatePresence>
           </div>
           <div className="flex justify-center mt-8 space-x-2">
             {testimonials.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setCurrentTestimonial(i)}
-                className={`w-3 h-3 rounded-full transition-all ${
+                className={`w-3 h-3 z-20 rounded-full transition-all ${
                   i === currentTestimonial ? "bg-blue-400" : "bg-gray-600"
                 }`}
               />
@@ -230,36 +232,26 @@ export default function CelebrityBookingLanding() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-gray-800/30">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="py-24 bg-gray-800/30">
+        <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold text-white mb-6">
             Ready to Book Your Next{" "}
             <span className="text-blue-400">Celebrity</span>?
           </h2>
           <p className="text-xl text-gray-300 mb-8">
-            Join thousands of satisfied clients who've made their events
-            unforgettable
+            Join thousands of clients who've made their moments iconic with our
+            talent.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105">
+            <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-semibold text-lg transition-transform transform hover:scale-105">
               Start Booking Now
             </button>
-            <button className="border-2 border-gray-700 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-800/50 transition-all duration-300">
+            <button className="border-2 border-gray-700 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-800/50">
               Speak to Our Team
             </button>
           </div>
         </div>
       </section>
-      {/* AnimatePresence handles mount/unmount transitions */}
-      <AnimatePresence>
-        {selectedCeleb && origin && (
-          <CelebModalWrapper
-            celeb_data={selectedCeleb}
-            origin={origin}
-            closeModal={closeModal}
-          />
-        )}
-      </AnimatePresence>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import "@/app/BookingForm.css"; // Assuming you have a CSS file for styles
 
 export default function BookingForm({ celebName }) {
   const [formData, setFormData] = useState({
@@ -19,7 +20,7 @@ export default function BookingForm({ celebName }) {
   });
 
   const [step, setStep] = useState(0);
-  const [direction, setDirection] = useState(0); // 1 = next, -1 = back
+  const [direction, setDirection] = useState(0);
 
   const totalSteps = 2;
 
@@ -52,15 +53,12 @@ export default function BookingForm({ celebName }) {
         const isCompleted = index < step;
         const isCurrent = index === step;
         const bgColor = isCompleted
-          ? "bg-green-500"
+          ? "bg-success"
           : isCurrent
-          ? "bg-yellow-400"
-          : "bg-gray-600";
+          ? "bg-warning"
+          : "bg-gray-400";
         return (
-          <div
-            key={index}
-            className={`w-4 h-4 rounded-full ${bgColor} transition`}
-          ></div>
+          <div key={index} className={`w-3 h-3 rounded-full ${bgColor}`}></div>
         );
       })}
     </div>
@@ -87,9 +85,10 @@ export default function BookingForm({ celebName }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="relative w-full mt-8 space-y-6 bg-gray-900 p-6 rounded-xl shadow-lg overflow-hidden"
+      data-theme="light"
+      className="w-full max-w-2xl mx-auto bg-base-200 p-6 rounded-xl shadow-md space-y-6 relative"
     >
-      <div className="relative h-fit transition-all duration-75 min-h-[300px]">
+      <div className="relative min-h-[300px]">
         <AnimatePresence custom={direction} mode="wait">
           {step === 0 && (
             <motion.div
@@ -101,52 +100,56 @@ export default function BookingForm({ celebName }) {
               exit="exit"
               transition={{ duration: 0.4 }}
             >
-              <h2 className="text-xl font-semibold text-yellow-400 mb-4">
+              <h2 className="text-xl font-bold text-warning mb-4">
                 Talk To Us About Your Event
               </h2>
-              <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <input
                   disabled
                   value={celebName}
-                  className="w-full p-2 rounded bg-gray-800 text-gray-400"
+                  className="input input-bordered input-disabled w-full"
                 />
                 <input
                   type="date"
                   name="eventDate"
                   onChange={handleChange}
-                  className="w-full p-2 rounded bg-gray-800 text-white"
+                  className="input input-bordered w-full"
                 />
                 <select
                   name="budget"
                   onChange={handleChange}
-                  className="w-full p-2 rounded bg-gray-800 text-white"
+                  className="select select-bordered w-full"
                 >
-                  <option value="">Select Approximate Talent Budget</option>
-                  <option value="$5,000 - $10,000">$5,000 - $10,000</option>
-                  <option value="$10,000 - $25,000">$10,000 - $25,000</option>
-                  <option value="$25,000+">$25,000+</option>
+                  <option disabled selected>
+                    Select Approximate Talent Budget
+                  </option>
+                  <option>$5,000 - $10,000</option>
+                  <option>$10,000 - $25,000</option>
+                  <option>$25,000+</option>
                 </select>
                 <select
                   name="eventType"
                   onChange={handleChange}
-                  className="w-full p-2 rounded bg-gray-800 text-white"
+                  className="select select-bordered w-full"
                 >
-                  <option value="">Select Event Type</option>
-                  <option value="Corporate Event">Corporate Event</option>
-                  <option value="Private Party">Private Party</option>
-                  <option value="Product Launch">Product Launch</option>
+                  <option disabled selected>
+                    Select Event Type
+                  </option>
+                  <option>Corporate Event</option>
+                  <option>Private Party</option>
+                  <option>Product Launch</option>
                 </select>
                 <input
                   name="location"
                   placeholder="Event Location"
                   onChange={handleChange}
-                  className="w-full p-2 rounded bg-gray-800 text-white"
+                  className="input input-bordered w-full"
                 />
                 <textarea
                   name="description"
                   placeholder="Additional Event Info / Description"
                   onChange={handleChange}
-                  className="w-full p-2 rounded bg-gray-800 text-white"
+                  className="textarea textarea-bordered w-full col-span-full"
                 />
               </div>
             </motion.div>
@@ -162,52 +165,52 @@ export default function BookingForm({ celebName }) {
               exit="exit"
               transition={{ duration: 0.4 }}
             >
-              <h2 className="text-xl font-semibold text-yellow-400 mb-4">
-                Tell us about Yourself Or Organisation
+              <h2 className="text-xl font-bold text-warning mb-4">
+                Tell us about Yourself or Organization
               </h2>
-              <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <input
                   name="fullName"
                   placeholder="Full Name"
                   onChange={handleChange}
-                  className="w-full p-2 rounded bg-gray-800 text-white"
+                  className="input input-bordered w-full"
                 />
                 <input
                   name="jobTitle"
                   placeholder="Job Title"
                   onChange={handleChange}
-                  className="w-full p-2 rounded bg-gray-800 text-white"
+                  className="input input-bordered w-full"
                 />
                 <input
                   name="organization"
                   placeholder="Organization"
                   onChange={handleChange}
-                  className="w-full p-2 rounded bg-gray-800 text-white"
+                  className="input input-bordered w-full"
                 />
                 <input
                   name="phone"
                   placeholder="Phone Number"
                   onChange={handleChange}
-                  className="w-full p-2 rounded bg-gray-800 text-white"
+                  className="input input-bordered w-full"
                 />
                 <input
                   name="email"
                   type="email"
                   placeholder="Email Address"
                   onChange={handleChange}
-                  className="w-full p-2 rounded bg-gray-800 text-white"
+                  className="input input-bordered w-full"
                 />
                 <input
                   name="address"
-                  placeholder="Full Home Address"
+                  placeholder="Full Address"
                   onChange={handleChange}
-                  className="w-full p-2 rounded bg-gray-800 text-white"
+                  className="input input-bordered w-full"
                 />
                 <input
                   name="airport"
                   placeholder="Nearest Airport"
                   onChange={handleChange}
-                  className="w-full p-2 rounded bg-gray-800 text-white"
+                  className="input input-bordered w-full"
                 />
               </div>
             </motion.div>
@@ -215,13 +218,13 @@ export default function BookingForm({ celebName }) {
         </AnimatePresence>
       </div>
 
-      {/* Navigation */}
+      {/* Navigation Buttons */}
       <div className="flex justify-between pt-4">
         {step > 0 && (
           <button
             type="button"
             onClick={handleBack}
-            className="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600"
+            className="btn btn-neutral"
           >
             Back
           </button>
@@ -230,15 +233,12 @@ export default function BookingForm({ celebName }) {
           <button
             type="button"
             onClick={handleNext}
-            className="ml-auto px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold rounded"
+            className="btn btn-warning ml-auto"
           >
             Next
           </button>
         ) : (
-          <button
-            type="submit"
-            className="ml-auto px-4 py-2 bg-green-500 hover:bg-green-600 text-black font-semibold rounded"
-          >
+          <button type="submit" className="btn btn-success ml-auto">
             Submit Booking Request
           </button>
         )}
