@@ -1,218 +1,407 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { v4 as uuidv4 } from "uuid";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const supabase = createClient(
   "https://dawexksmkjeubjhgchjt.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRhd2V4a3Nta2pldWJqaGdjaGp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA3NTY5MDEsImV4cCI6MjA2NjMzMjkwMX0.7YGQOcTZPtZwvDAAZK-gDVBzQphIKjrUsD0OxH5iWjo"
 );
 
-const Spinner = () => (
-  <div className="flex justify-center items-center">
-    <span className="loading loading-spinner loading-lg text-primary" />
-  </div>
-);
-
-export default function AdminPage() {
+export default function AdminPanel() {
+  const [loading, setLoading] = useState(true);
+  const [uploading, setUploading] = useState(false);
   const [mapUrl, setMapUrl] = useState("");
   const [images, setImages] = useState([]);
   const [celebs, setCelebs] = useState([]);
   const [newCeleb, setNewCeleb] = useState({
     name: "",
     role: "",
-    image: "",
     bio: "",
   });
-  const [loading, setLoading] = useState(true);
-  const [uploading, setUploading] = useState(false);
+  const [newCelebImageFile, setNewCelebImageFile] = useState(null);
+  const [editingCelebId, setEditingCelebId] = useState(null);
+  const [editingCelebData, setEditingCelebData] = useState({
+    name: "",
+    role: "",
+    bio: "",
+  });
+  const [collapsibles, setCollapsibles] = useState({
+    buildingImages: false,
+    mapUrl: false,
+    addCelebrity: true,
+    listCelebrities: false,
+  });
+
+  const toggleSection = (key) => {
+    setCollapsibles((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
+  };
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  async function fetchData() {
+  const fetchData = async () => {
     setLoading(true);
-    const { data: setting } = await supabase
-      .from("settings")
-      .select("value")
-      .eq("key", "map_url")
-      .single();
-    setMapUrl(setting?.value || "");
+    try {
+      const { data: setting } = await supabase
+        .from("settings")
+        .select("value")
+        .eq("key", "map_url")
+        .single();
+      setMapUrl(setting?.value || "");
 
-    const { data: c } = await supabase.from("celebrities").select("*");
-    setCelebs(c || []);
-    setLoading(false);
-  }
+      const { data: c } = await supabase.from("celebrities").select("*");
+      setCelebs(c || []);
+    } catch (err) {
+      toast.error("Failed to fetch data.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  async function handleMapSave() {
-    await supabase.from("settings").upsert([{ key: "map_url", value: mapUrl }]);
-    alert("Map URL saved!");
-  }
-
-  async function handleImageUpload(e) {
+  const handleImageUpload = async (e) => {
     const files = e.target.files;
-    if (files.length + images.length > 4) return alert("Max 4 images");
-    setUploading(true);
+    if (files.length + images.length > 4) {
+      toast.error("Max 4 images allowed");
+      return;
+    }
 
+    setUploading(true);
     const uploaded = [];
+
     for (let file of files) {
       const fileName = uuidv4();
       const { error } = await supabase.storage
         .from("buildings")
         .upload(fileName, file);
       if (error) {
-        console.error(error);
+        toast.error("Upload error");
         continue;
       }
-      const { data: urlData } = supabase.storage
+      const { data } = supabase.storage
         .from("buildings")
         .getPublicUrl(fileName);
-      uploaded.push(urlData.publicUrl);
+      uploaded.push(data.publicUrl);
     }
 
     setImages((prev) => [...prev, ...uploaded]);
     setUploading(false);
-  }
+  };
 
-  async function addCelebrity() {
-    if (!newCeleb.name) return alert("Name is required");
-    const { error } = await supabase.from("celebrities").insert([newCeleb]);
-    if (!error) {
-      fetchData();
-      setNewCeleb({ name: "", role: "", image: "", bio: "" });
+  const handleMapSave = async () => {
+    setUploading(true);
+    await supabase.from("settings").upsert([{ key: "map_url", value: mapUrl }]);
+    toast.success("Map URL saved");
+    setUploading(false);
+  };
+
+  const addCelebrity = async () => {
+    if (!newCeleb.name || !newCelebImageFile) {
+      return toast.error("Name and image are required");
     }
-  }
 
-  async function removeCelebrity(id) {
+    setUploading(true);
+    const fileName = uuidv4();
+    const { error: uploadError } = await supabase.storage
+      .from("building-images")
+      .upload(fileName, newCelebImageFile);
+
+    if (uploadError) {
+      toast.error("Image upload failed");
+      setUploading(false);
+      return;
+    }
+
+    const { data } = supabase.storage
+      .from("building-images")
+      .getPublicUrl(fileName);
+
+    const celebToInsert = {
+      ...newCeleb,
+      image: data.publicUrl,
+    };
+
+    const { error: insertError } = await supabase
+      .from("celebrities")
+      .insert([celebToInsert]);
+
+    if (insertError) {
+      toast.error("Failed to add celebrity");
+    } else {
+      toast.success("Celebrity added");
+      setNewCeleb({ name: "", role: "", bio: "" });
+      setNewCelebImageFile(null);
+      fetchData();
+    }
+
+    setUploading(false);
+  };
+
+  const removeCelebrity = async (id) => {
     await supabase.from("celebrities").delete().eq("id", id);
     fetchData();
-  }
+  };
+
+  const saveEditedCelebrity = async () => {
+    if (!editingCelebId) return;
+
+    const { error } = await supabase
+      .from("celebrities")
+      .update(editingCelebData)
+      .eq("id", editingCelebId);
+
+    if (error) {
+      toast.error("Failed to update celebrity");
+    } else {
+      toast.success("Celebrity updated");
+      setEditingCelebId(null);
+      setEditingCelebData({ name: "", role: "", bio: "" });
+      fetchData();
+    }
+  };
 
   return (
-    <div className="p-6 max-w-6xl mx-auto space-y-10 min-h-[80vh]">
-      <h1 className="text-4xl font-bold text-center mb-4">Admin Panel</h1>
+    <div className="bg-gray-100 px-4 py-10">
+      <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-lg p-8 space-y-8">
+        <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
+          Admin Panel
+        </h1>
 
-      {/* Building Images */}
-      <section>
-        <h2 className="text-2xl font-semibold mb-2">Building Images (max 4)</h2>
-        <input
-          type="file"
-          multiple
-          onChange={handleImageUpload}
-          className="file-input file-input-bordered w-full max-w-xs"
-        />
-        {uploading ? (
-          <Spinner />
-        ) : (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
-            {images.map((url, idx) => (
-              <img
-                key={idx}
-                src={url}
-                alt={`Building ${idx}`}
-                className="rounded-lg shadow"
-              />
-            ))}
-          </div>
-        )}
-      </section>
-
-      {/* Google Map Link */}
-      <section>
-        <h2 className="text-2xl font-semibold mb-2">Google Maps Iframe Link</h2>
-        <textarea
-          value={mapUrl}
-          onChange={(e) => setMapUrl(e.target.value)}
-          className="textarea textarea-bordered w-full"
-        />
-        <button
-          className="btn btn-primary mt-2 transition hover:scale-105"
-          onClick={handleMapSave}
-        >
-          Save Map URL
-        </button>
-      </section>
-
-      {/* Celebrity List */}
-      <section>
-        <h2 className="text-2xl font-semibold mb-4">Manage Celebrities</h2>
-
-        {loading ? (
-          <Spinner />
-        ) : (
-          <div className="flex flex-wrap gap-6">
-            {celebs.map((celeb) => (
-              <div
-                key={celeb.id}
-                className="card w-full md:w-1/2 lg:w-1/3 bg-base-100 shadow-md hover:shadow-lg transition"
-              >
-                <figure className="px-4 pt-4">
-                  <img
-                    src={celeb.image || "https://via.placeholder.com/150"}
-                    alt={celeb.name}
-                    className="rounded-xl h-40 w-full object-cover"
-                  />
-                </figure>
-                <div className="card-body">
-                  <h3 className="card-title">{celeb.name}</h3>
-                  <p className="text-sm text-gray-600 italic">{celeb.role}</p>
-                  <p className="text-sm mt-1">{celeb.bio}</p>
-                  <div className="card-actions justify-end mt-2">
-                    <button
-                      className="btn btn-sm btn-error"
-                      onClick={() => removeCelebrity(celeb.id)}
-                    >
-                      Remove
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* Add New Celebrity */}
-        <div className="mt-8 space-y-3">
-          <h3 className="font-bold text-lg">Add New Celebrity</h3>
-          <input
-            type="text"
-            placeholder="Name"
-            value={newCeleb.name}
-            onChange={(e) => setNewCeleb({ ...newCeleb, name: e.target.value })}
-            className="input input-bordered w-full"
-          />
-          <input
-            type="text"
-            placeholder="Role"
-            value={newCeleb.role}
-            onChange={(e) => setNewCeleb({ ...newCeleb, role: e.target.value })}
-            className="input input-bordered w-full"
-          />
-          <input
-            type="text"
-            placeholder="Image URL"
-            value={newCeleb.image}
-            onChange={(e) =>
-              setNewCeleb({ ...newCeleb, image: e.target.value })
-            }
-            className="input input-bordered w-full"
-          />
-          <textarea
-            placeholder="Bio"
-            value={newCeleb.bio}
-            onChange={(e) => setNewCeleb({ ...newCeleb, bio: e.target.value })}
-            className="textarea textarea-bordered w-full"
-          />
+        {/* Building Images */}
+        <section>
           <button
-            className="btn btn-success mt-2 transition hover:scale-105"
-            onClick={addCelebrity}
+            onClick={() => toggleSection("buildingImages")}
+            className="w-full text-left text-lg font-semibold mb-2"
           >
-            Add Celebrity
+            🏗 Building Images {collapsibles.buildingImages ? "▲" : "▼"}
           </button>
-        </div>
-      </section>
+          {collapsibles.buildingImages && (
+            <div className="space-y-3">
+              <input
+                type="file"
+                multiple
+                onChange={handleImageUpload}
+                className="file-input file-input-bordered w-full max-w-sm"
+              />
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                {images.map((url, idx) => (
+                  <img
+                    key={idx}
+                    src={url}
+                    alt={`Building ${idx}`}
+                    className="rounded-xl h-40 w-full object-cover shadow"
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+        </section>
+
+        {/* Google Maps Iframe */}
+        <section>
+          <button
+            onClick={() => toggleSection("mapUrl")}
+            className="w-full text-left text-lg font-semibold mb-2"
+          >
+            🗺 Google Maps Iframe {collapsibles.mapUrl ? "▲" : "▼"}
+          </button>
+          {collapsibles.mapUrl && (
+            <div>
+              <textarea
+                value={mapUrl}
+                onChange={(e) => setMapUrl(e.target.value)}
+                className="textarea textarea-bordered w-full"
+              />
+              <button
+                onClick={handleMapSave}
+                disabled={uploading}
+                className="mt-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center justify-center disabled:opacity-50"
+              >
+                {uploading && (
+                  <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>
+                )}
+                {uploading ? "Saving..." : "Save Map URL"}
+              </button>
+            </div>
+          )}
+        </section>
+
+        {/* Add Celebrity */}
+        <section>
+          <button
+            onClick={() => toggleSection("addCelebrity")}
+            className="w-full text-left text-lg font-semibold mb-2"
+          >
+            🌟 Add New Celebrity {collapsibles.addCelebrity ? "▲" : "▼"}
+          </button>
+          {collapsibles.addCelebrity && (
+            <div className="space-y-3">
+              <input
+                type="text"
+                placeholder="Name"
+                value={newCeleb.name}
+                onChange={(e) =>
+                  setNewCeleb({ ...newCeleb, name: e.target.value })
+                }
+                className="input input-bordered w-full"
+              />
+              <input
+                type="text"
+                placeholder="Role"
+                value={newCeleb.role}
+                onChange={(e) => {
+                  setNewCeleb({ ...newCeleb, role: e.target.value });
+                }}
+                className="input input-bordered w-full"
+              />
+              <input
+                type="file"
+                required
+                onChange={(e) => setNewCelebImageFile(e.target.files[0])}
+                className="file-input file-input-bordered w-full"
+              />
+              <textarea
+                placeholder="Bio"
+                value={newCeleb.bio}
+                onChange={(e) =>
+                  setNewCeleb({ ...newCeleb, bio: e.target.value })
+                }
+                className="textarea textarea-bordered w-full"
+              />
+              <button
+                onClick={addCelebrity}
+                disabled={uploading}
+                className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg flex items-center justify-center disabled:opacity-50"
+              >
+                {uploading && (
+                  <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>
+                )}
+                {uploading ? "Adding..." : "Add Celebrity"}
+              </button>
+            </div>
+          )}
+        </section>
+
+        {/* Manage Celebrities */}
+        <section>
+          <button
+            onClick={() => toggleSection("listCelebrities")}
+            className="w-full text-left text-lg font-semibold mb-2"
+          >
+            👥 Manage Celebrities {collapsibles.listCelebrities ? "▲" : "▼"}
+          </button>
+          {collapsibles.listCelebrities && (
+            <div className="overflow-x-auto whitespace-nowrap py-2">
+              {loading ? (
+                <p>Loading...</p>
+              ) : (
+                celebs.map((celeb) => (
+                  <div
+                    key={celeb.id}
+                    className="inline-block w-72 bg-gray-50 rounded-xl p-4 m-2 shadow-md align-top"
+                  >
+                    <img
+                      src={celeb.image || "https://via.placeholder.com/150"}
+                      alt={celeb.name}
+                      className="rounded-xl h-40 w-full object-cover"
+                    />
+
+                    {editingCelebId === celeb.id ? (
+                      <>
+                        <input
+                          type="text"
+                          className="input input-sm w-full mt-2"
+                          value={editingCelebData.name}
+                          onChange={(e) =>
+                            setEditingCelebData({
+                              ...editingCelebData,
+                              name: e.target.value,
+                            })
+                          }
+                        />
+                        <input
+                          type="text"
+                          className="input input-sm w-full mt-1"
+                          value={editingCelebData.role}
+                          onChange={(e) =>
+                            setEditingCelebData({
+                              ...editingCelebData,
+                              role: e.target.value,
+                            })
+                          }
+                        />
+                        <textarea
+                          className="textarea textarea-sm w-full mt-1 h-20"
+                          value={editingCelebData.bio}
+                          onChange={(e) =>
+                            setEditingCelebData({
+                              ...editingCelebData,
+                              bio: e.target.value,
+                            })
+                          }
+                        />
+                        <div className="flex justify-between mt-2">
+                          <button
+                            onClick={saveEditedCelebrity}
+                            className="px-3 py-1 bg-green-600 hover:bg-green-700 text-white rounded-md text-sm"
+                          >
+                            Save
+                          </button>
+                          <button
+                            onClick={() => setEditingCelebId(null)}
+                            className="px-3 py-1 bg-gray-400 hover:bg-gray-500 text-white rounded-md text-sm"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <h3 className="font-bold text-lg mt-2">{celeb.name}</h3>
+                        <p className="italic text-sm text-gray-600">
+                          {celeb.role}
+                        </p>
+                        <p className="text-sm text-gray-700 h-24 overflow-hidden text-ellipsis text-wrap">
+                          {celeb.bio}
+                        </p>
+                        <div className="flex justify-between mt-2">
+                          <button
+                            onClick={() => {
+                              setEditingCelebId(celeb.id);
+                              setEditingCelebData({
+                                name: celeb.name,
+                                role: celeb.role,
+                                bio: celeb.bio,
+                              });
+                            }}
+                            className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => removeCelebrity(celeb.id)}
+                            className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm"
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                ))
+              )}
+            </div>
+          )}
+        </section>
+      </div>
+      <ToastContainer />
     </div>
   );
 }
