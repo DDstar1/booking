@@ -141,22 +141,15 @@ export default function CelebrityBookingLanding() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             {steps.map((step, i) => (
-              <HoverBorderGradient
-                key={i}
-                containerClassName="rounded-xl"
-                as="div"
-                className="dark:bg-black bg-white text-black dark:text-white "
-              >
-                <div className="text-center bg-gray-900/50 rounded-xl p-6 border border-gray-700 transition-transform duration-300 hover:scale-[1.03]">
-                  <div className="bg-blue-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 shadow-md">
-                    {step.icon}
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-2">
-                    {step.title}
-                  </h3>
-                  <p className="text-gray-300">{step.description}</p>
+              <div className="text-center bg-gray-900/50 rounded-xl p-6 border border-gray-700 transition-transform duration-300 hover:scale-[1.03]">
+                <div className="bg-blue-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 shadow-md">
+                  {step.icon}
                 </div>
-              </HoverBorderGradient>
+                <h3 className="text-xl font-bold text-white mb-2">
+                  {step.title}
+                </h3>
+                <p className="text-gray-300">{step.description}</p>
+              </div>
             ))}
           </div>
         </div>
