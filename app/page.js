@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Calendar, Users, Award, ArrowRight, Play } from "lucide-react";
 import { BackgroundBeams } from "@/components/ui/BackgroundBeam"; // Assuming you have a BackgroundBeams component
-
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { LampDemo } from "@/components/Featured_celebs"; // Assuming you have a LampDemo component
@@ -100,9 +100,11 @@ export default function CelebrityBookingLanding() {
             whileHover={{ scale: 1.02 }}
             className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
           >
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all transform flex items-center justify-center">
-              Browse Celebrities <ArrowRight className="ml-2 h-5 w-5" />
-            </button>
+            <Link href="/list">
+              <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all transform flex items-center justify-center">
+                Browse Celebrities <ArrowRight className="ml-2 h-5 w-5" />
+              </button>
+            </Link>
           </motion.div>
           <motion.div
             className="flex justify-center space-x-8 text-gray-400"

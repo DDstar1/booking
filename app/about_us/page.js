@@ -1,3 +1,4 @@
+import Link from "next/link";
 export default function AboutPage() {
   return (
     <div className="bg-black text-white min-h-screen">
@@ -26,7 +27,11 @@ export default function AboutPage() {
       <div className="max-w-3xl mx-auto px-4 py-12 space-y-12">
         {/* Intro */}
         <section>
-          <h2 className="text-2xl font-semibold text-white mb-4">Who We Are</h2>
+          <center>
+            <h2 className="text-2xl text-center font-semibold w-fit text-white border-b-2 border-dashed border-b-gray-500 pb-2 mb-6">
+              Who We Are
+            </h2>
+          </center>
           <h3 className="text-xl font-semibold text-gray-300 mb-6">
             Providing You With A Seamless Booking Experience
           </h3>
@@ -41,16 +46,20 @@ export default function AboutPage() {
             — matching talent with PR marketing, advertising campaigns, and
             special events for both corporate and non-profit clients.
           </p>
-          <button className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-all duration-200 ease-in-out hover:shadow-lg hover:shadow-blue-500/25 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-black">
-            Book Now!!!
-          </button>
+          <Link href="/list">
+            <button className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-all duration-200 ease-in-out hover:shadow-lg hover:shadow-blue-500/25 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-black">
+              Book Now!!!
+            </button>
+          </Link>
         </section>
 
         {/* How We Operate */}
         <section>
-          <h2 className="text-2xl font-semibold text-white mb-6">
-            Our Approach
-          </h2>
+          <center>
+            <h2 className="text-2xl text-center font-semibold w-fit text-white border-b-2 border-dashed border-b-gray-500 pb-2 mb-6">
+              Our Approach
+            </h2>
+          </center>
           <p className="text-gray-300 leading-relaxed mb-4">
             We leverage our strong insider relationships and direct access to
             thousands of celebrities from film, television, music, sports,
@@ -68,10 +77,14 @@ export default function AboutPage() {
 
         {/* Additional Features Section */}
         <section>
-          <h2 className="text-2xl font-semibold text-white mb-6">
-            What Sets Us Apart
-          </h2>
-          <div className="grid md:grid-cols-2 gap-8">
+          <center>
+            {" "}
+            <h2 className="text-2xl text-center font-semibold w-fit text-white border-b-2 border-dashed border-b-gray-500 pb-2 mb-6">
+              What Sets Us Apart
+            </h2>
+          </center>
+
+          <div className="grid grid-cols-2 gap-8">
             <div>
               <h3 className="text-lg font-semibold text-white mb-3">
                 Expert Team

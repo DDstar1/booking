@@ -76,9 +76,11 @@ const Navigation = () => {
 
               {/* Desktop Button */}
               <div className="hidden md:flex items-center space-x-4">
-                <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105">
-                  Book Now
-                </button>
+                <Link href="/list">
+                  <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105">
+                    Book Now
+                  </button>
+                </Link>
               </div>
 
               {/* Mobile Menu Button */}
