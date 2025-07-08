@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import "@/app/BookingForm.css"; // Assuming you have a CSS file for styles
+import "@/app/BookingForm.css";
 
 export default function BookingForm({ celebName }) {
   const [formData, setFormData] = useState({
@@ -21,7 +21,6 @@ export default function BookingForm({ celebName }) {
 
   const [step, setStep] = useState(0);
   const [direction, setDirection] = useState(0);
-
   const totalSteps = 2;
 
   const handleChange = (e) => {
@@ -53,9 +52,9 @@ export default function BookingForm({ celebName }) {
         const isCompleted = index < step;
         const isCurrent = index === step;
         const bgColor = isCompleted
-          ? "bg-success"
+          ? "bg-green-500"
           : isCurrent
-          ? "bg-warning"
+          ? "bg-yellow-500"
           : "bg-gray-400";
         return (
           <div key={index} className={`w-3 h-3 rounded-full ${bgColor}`}></div>
@@ -82,6 +81,12 @@ export default function BookingForm({ celebName }) {
     }),
   };
 
+  const inputClass =
+    "w-full rounded-xl border border-gray-700 bg-gray-900 text-white placeholder:text-gray-400 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500";
+
+  const selectClass = inputClass;
+  const textareaClass = `${inputClass} min-h-[120px]`;
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -100,27 +105,28 @@ export default function BookingForm({ celebName }) {
               exit="exit"
               transition={{ duration: 0.4 }}
             >
-              <h2 className="text-xl font-bold text-warning mb-4">
+              <h2 className="text-xl font-bold text-yellow-500 mb-4">
                 Talk To Us About Your Event
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <input
                   disabled
                   value={celebName}
-                  className="input input-bordered input-disabled w-full"
+                  className="w-full rounded-xl border border-gray-700 bg-gray-800 text-gray-400 px-4 py-2 opacity-80 cursor-not-allowed"
                 />
                 <input
                   type="date"
                   name="eventDate"
                   onChange={handleChange}
-                  className="input input-bordered w-full"
+                  className={inputClass}
                 />
                 <select
                   name="budget"
                   onChange={handleChange}
-                  className="select select-bordered w-full"
+                  className={selectClass}
+                  defaultValue=""
                 >
-                  <option disabled selected>
+                  <option value="" disabled>
                     Select Approximate Talent Budget
                   </option>
                   <option>$5,000 - $10,000</option>
@@ -130,9 +136,10 @@ export default function BookingForm({ celebName }) {
                 <select
                   name="eventType"
                   onChange={handleChange}
-                  className="select select-bordered w-full"
+                  className={selectClass}
+                  defaultValue=""
                 >
-                  <option disabled selected>
+                  <option value="" disabled>
                     Select Event Type
                   </option>
                   <option>Corporate Event</option>
@@ -143,13 +150,13 @@ export default function BookingForm({ celebName }) {
                   name="location"
                   placeholder="Event Location"
                   onChange={handleChange}
-                  className="input input-bordered w-full"
+                  className={inputClass}
                 />
                 <textarea
                   name="description"
                   placeholder="Additional Event Info / Description"
                   onChange={handleChange}
-                  className="textarea textarea-bordered w-full col-span-full"
+                  className={`${textareaClass} col-span-full`}
                 />
               </div>
             </motion.div>
@@ -165,7 +172,7 @@ export default function BookingForm({ celebName }) {
               exit="exit"
               transition={{ duration: 0.4 }}
             >
-              <h2 className="text-xl font-bold text-warning mb-4">
+              <h2 className="text-xl font-bold text-yellow-500 mb-4">
                 Tell us about Yourself or Organization
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -173,44 +180,44 @@ export default function BookingForm({ celebName }) {
                   name="fullName"
                   placeholder="Full Name"
                   onChange={handleChange}
-                  className="input input-bordered w-full"
+                  className={inputClass}
                 />
                 <input
                   name="jobTitle"
                   placeholder="Job Title"
                   onChange={handleChange}
-                  className="input input-bordered w-full"
+                  className={inputClass}
                 />
                 <input
                   name="organization"
                   placeholder="Organization"
                   onChange={handleChange}
-                  className="input input-bordered w-full"
+                  className={inputClass}
                 />
                 <input
                   name="phone"
                   placeholder="Phone Number"
                   onChange={handleChange}
-                  className="input input-bordered w-full"
+                  className={inputClass}
                 />
                 <input
                   name="email"
                   type="email"
                   placeholder="Email Address"
                   onChange={handleChange}
-                  className="input input-bordered w-full"
+                  className={inputClass}
                 />
                 <input
                   name="address"
                   placeholder="Full Address"
                   onChange={handleChange}
-                  className="input input-bordered w-full"
+                  className={inputClass}
                 />
                 <input
                   name="airport"
                   placeholder="Nearest Airport"
                   onChange={handleChange}
-                  className="input input-bordered w-full"
+                  className={inputClass}
                 />
               </div>
             </motion.div>
@@ -219,31 +226,33 @@ export default function BookingForm({ celebName }) {
       </div>
 
       {/* Navigation Buttons */}
-      <div className="flex justify-between pt-4">
+      <div className="flex justify-between gap-3 pt-4">
         {step > 0 && (
           <button
             type="button"
             onClick={handleBack}
-            className="btn btn-neutral"
+            className="px-6 py-2.5 bg-gray-800 hover:bg-gray-700 text-white border border-gray-700 rounded-lg font-medium transition-all duration-200 ease-in-out hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-black"
           >
-            Back
+            ← Back
           </button>
         )}
         {step < totalSteps - 1 ? (
           <button
             type="button"
             onClick={handleNext}
-            className="btn btn-warning ml-auto"
+            className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-all duration-200 ease-in-out hover:shadow-lg hover:shadow-blue-500/25 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-black ml-auto"
           >
-            Next
+            Next →
           </button>
         ) : (
-          <button type="submit" className="btn btn-success ml-auto">
+          <button
+            type="submit"
+            className="px-6 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-all duration-200 ease-in-out hover:shadow-lg hover:shadow-green-500/25 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black ml-auto"
+          >
             Submit Booking Request
           </button>
         )}
       </div>
-
       {renderDots()}
     </form>
   );
