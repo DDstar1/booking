@@ -124,6 +124,10 @@ export default function CelebrityBookingLanding() {
             ))}
           </motion.div>
         </div>
+        <img
+          className="w-screen absolute h-auto bottom-full left-0 object-cover"
+          src="/bubble-side-divider.svg"
+        />
       </section>
       {/* FEATURED CELEBRITIES */}
       <LampDemo />

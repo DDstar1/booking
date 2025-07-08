@@ -37,11 +37,7 @@ export function LampDemo() {
     <>
       {" "}
       <LampContainer>
-        <img
-          className="w-screen absolute h-auto -top-1.5 left-0 object-cover"
-          src="/bubble-side-divider.svg"
-        />
-        <section className="py-12 relative z-10">
+        <section id="featured_celebrities" className="py-12 relative z-10">
           <div className="max-w-[90vw]  mx-auto px-4">
             <h2 className="text-3xl font-bold text-center mb-5 text-white">
               Featured <span className="text-blue-400">Celebrities</span>

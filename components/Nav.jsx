@@ -37,7 +37,7 @@ const Navigation = () => {
 
   const links = [
     { label: "Celebrity List", href: "/list" },
-    { label: "Featured Celebrities", href: "#featured_celebrities" },
+    { label: "Featured Celebrities", href: "/#featured_celebrities" },
     { label: "About Us", href: "/about_us" },
     { label: "Contact Us", href: "/contact_us" },
   ];

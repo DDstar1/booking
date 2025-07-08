@@ -12,18 +12,24 @@ export default function EditCelebModal({
 }) {
   const [editingData, setEditingData] = useState({
     name: celeb?.name || "",
-    role: celeb?.role || "",
     bio: celeb?.bio || "",
+    fee_range: celeb?.fee_range || "",
+    years_active: celeb?.years_active || "",
+    availability: celeb?.availability || "",
+    known_for: celeb?.known_for || "",
+    audience: celeb?.audience || "",
+    website: celeb?.website || "",
+    phone: celeb?.phone || "",
+    tags: celeb?.tags?.join(", ") || "",
+    featured: celeb?.featured || false,
   });
+
   const [newImageFile, setNewImageFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState(celeb?.image || "");
+  const [imagePreview, setImagePreview] = useState(celeb?.profile_image || "");
 
   useEffect(() => {
-    // Lock scroll
     const originalStyle = window.getComputedStyle(document.body).overflow;
     document.body.style.overflow = "hidden";
-
-    // Unlock scroll when component unmounts
     return () => {
       document.body.style.overflow = originalStyle;
     };
@@ -34,11 +40,16 @@ export default function EditCelebModal({
     if (file) {
       setNewImageFile(file);
       const reader = new FileReader();
-      reader.onload = (e) => {
-        setImagePreview(e.target.result);
-      };
+      reader.onload = (e) => setImagePreview(e.target.result);
       reader.readAsDataURL(file);
     }
+  };
+
+  const handleInputChange = (field, value) => {
+    setEditingData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
   };
 
   const handleSave = () => {
@@ -49,20 +60,16 @@ export default function EditCelebModal({
 
     onSave({
       ...editingData,
+      tags: editingData.tags
+        .split(",")
+        .map((t) => t.trim())
+        .filter((t) => t.length > 0),
       imageFile: newImageFile,
     });
   };
 
-  const handleInputChange = (field, value) => {
-    setEditingData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
-
   return (
     <>
-      {/* Overlay */}
       <motion.div
         className="fixed inset-0 bg-black/40 backdrop-blur-sm z-60"
         initial={{ opacity: 0 }}
@@ -71,7 +78,6 @@ export default function EditCelebModal({
         onClick={closeModal}
       />
 
-      {/* Modal */}
       <motion.div
         className="fixed z-70"
         initial={{
@@ -103,9 +109,7 @@ export default function EditCelebModal({
           transition: { duration: 0.3 },
         }}
       >
-        {/* Modal Content */}
-        <div className="relative w-full bg-black/60 rounded-2xl md:max-w-[500px] mx-auto overflow-hidden shadow-xl backdrop-blur-md">
-          {/* Close Button */}
+        <div className="relative w-full bg-black/60 rounded-2xl md:max-w-[550px] mx-auto overflow-hidden shadow-xl backdrop-blur-md">
           <button
             onClick={closeModal}
             className="absolute top-4 right-4 w-8 h-8 bg-white text-black rounded-full text-base font-bold z-50"
@@ -113,7 +117,6 @@ export default function EditCelebModal({
             ✕
           </button>
 
-          {/* Header Section with Image Preview */}
           <div className="relative">
             <img
               src={imagePreview || "https://via.placeholder.com/400x200"}
@@ -135,11 +138,11 @@ export default function EditCelebModal({
             </div>
           </div>
 
-          {/* Edit Form */}
-          <div className="p-4 text-white space-y-4">
+          {/* Form */}
+          <div className="p-4 text-white space-y-4 max-h-[80vh] overflow-y-auto">
             {/* Image Upload */}
-            <div className="space-y-2">
-              <label className="block text-sm font-semibold text-white">
+            <div>
+              <label className="block text-sm font-semibold">
                 Update Image
               </label>
               <input
@@ -150,60 +153,95 @@ export default function EditCelebModal({
               />
             </div>
 
-            {/* Name Input */}
-            <div className="space-y-2">
-              <label className="block text-sm font-semibold text-white">
-                Name *
-              </label>
-              <input
-                type="text"
-                value={editingData.name}
-                onChange={(e) => handleInputChange("name", e.target.value)}
-                className="w-full px-3 py-2 bg-gray-800/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="Enter celebrity name"
-              />
-            </div>
+            {/* Inputs */}
+            {[
+              { label: "Name *", key: "name", placeholder: "Celebrity name" },
 
-            {/* Role Input */}
-            <div className="space-y-2">
-              <label className="block text-sm font-semibold text-white">
-                Role
-              </label>
-              <input
-                type="text"
-                value={editingData.role}
-                onChange={(e) => handleInputChange("role", e.target.value)}
-                className="w-full px-3 py-2 bg-gray-800/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="e.g., Actor, Musician, Influencer"
-              />
-            </div>
+              {
+                label: "Fee Range",
+                key: "fee_range",
+                placeholder: "$1000 - $5000",
+              },
+              {
+                label: "Years Active",
+                key: "years_active",
+                placeholder: "e.g. 2010 - present",
+              },
+              {
+                label: "Availability",
+                key: "availability",
+                placeholder: "Weekdays, Weekends...",
+              },
+              {
+                label: "Known For",
+                key: "known_for",
+                placeholder: "TV show, song, etc.",
+              },
+              {
+                label: "Audience",
+                key: "audience",
+                placeholder: "Kids, Teens, General",
+              },
+              { label: "Website", key: "website", placeholder: "https://..." },
+              { label: "Phone", key: "phone", placeholder: "+1..." },
+              {
+                label: "Tags (comma separated)",
+                key: "tags",
+                placeholder: "funny, singer, athlete",
+              },
+            ].map(({ label, key, placeholder }) => (
+              <div key={key}>
+                <label className="block text-sm font-semibold">{label}</label>
+                <input
+                  type="text"
+                  value={editingData[key]}
+                  onChange={(e) => handleInputChange(key, e.target.value)}
+                  className="w-full px-3 py-2 bg-gray-800/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder={placeholder}
+                />
+              </div>
+            ))}
 
-            {/* Bio Textarea */}
-            <div className="space-y-2">
-              <label className="block text-sm font-semibold text-white">
-                Biography
-              </label>
+            {/* Bio */}
+            <div>
+              <label className="block text-sm font-semibold">Biography</label>
               <textarea
                 value={editingData.bio}
                 onChange={(e) => handleInputChange("bio", e.target.value)}
-                rows={4}
+                rows={3}
                 className="w-full px-3 py-2 bg-gray-800/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                 placeholder="Enter celebrity biography..."
               />
             </div>
 
-            {/* Action Buttons */}
+            {/* Featured Checkbox */}
+            <div className="flex items-center space-x-2">
+              <input
+                id="featured"
+                type="checkbox"
+                checked={editingData.featured}
+                onChange={(e) =>
+                  handleInputChange("featured", e.target.checked)
+                }
+                className="h-4 w-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
+              />
+              <label htmlFor="featured" className="text-sm font-medium">
+                Mark as Featured
+              </label>
+            </div>
+
+            {/* Buttons */}
             <div className="flex justify-between gap-4 pt-4">
               <button
                 onClick={closeModal}
-                className="flex-1 bg-gray-600 hover:bg-gray-700 py-2 rounded-xl font-semibold text-sm transition-colors"
+                className="flex-1 bg-gray-600 hover:bg-gray-700 py-2 rounded-xl font-semibold text-sm"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSave}
                 disabled={uploading}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 py-2 rounded-xl font-semibold text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                className="flex-1 bg-blue-600 hover:bg-blue-700 py-2 rounded-xl font-semibold text-sm flex items-center justify-center disabled:opacity-50"
               >
                 {uploading ? (
                   <>
