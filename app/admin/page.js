@@ -6,6 +6,7 @@ import { createClient } from "@supabase/supabase-js";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AnimatePresence } from "framer-motion";
+import { v4 as uuidv4 } from "uuid";
 
 import BuildingImagesSection from "@/components/admin/BuildingImagesSection";
 import MapUrlSection from "@/components/admin/MapUrlSection";
@@ -162,6 +163,7 @@ export default function AdminPanel() {
 }
 
 // Helper function for saving edits
+
 const handleSaveEdit = async (
   editData,
   editingCeleb,
@@ -178,12 +180,37 @@ const handleSaveEdit = async (
   try {
     let updatedData = {
       name: editData.name,
-      //role: editData.role,
       bio: editData.bio,
+      featured: editData.featured,
+      fee_range: editData.fee_range,
+      years_active: editData.years_active,
+      availability: editData.availability,
+      known_for: editData.known_for,
+      audience: editData.audience,
+      tags: editData.tags, // Already converted to array in EditCelebModal
     };
 
-    // If there's a new image file, upload it
+    // If there's a new image file, handle deletion and upload
     if (editData.imageFile) {
+      // 1. Delete old image (if it exists and is from this bucket)
+      if (editingCeleb.image) {
+        try {
+          const urlParts = editingCeleb.image.split("/");
+          const oldFileName = urlParts[urlParts.length - 1];
+
+          const { error: deleteError } = await supabase.storage
+            .from("celebrity-images")
+            .remove([oldFileName]);
+
+          if (deleteError) {
+            console.warn("Failed to delete old image:", deleteError.message);
+          }
+        } catch (e) {
+          console.warn("Error extracting old filename:", e);
+        }
+      }
+
+      // 2. Upload new image
       const fileName = uuidv4();
       const { error: uploadError } = await supabase.storage
         .from("celebrity-images")
@@ -202,11 +229,11 @@ const handleSaveEdit = async (
       updatedData.image = data.publicUrl;
     }
 
+    // Update DB record
     const { error } = await supabase
       .from("celebrities")
       .update(updatedData)
       .eq("id", editingCeleb.id);
-    console.log(error);
 
     if (error) {
       toast.error("Failed to update celebrity");
@@ -217,6 +244,7 @@ const handleSaveEdit = async (
     }
   } catch (err) {
     toast.error("An error occurred while updating");
+    console.log(err);
   } finally {
     setUploading(false);
   }

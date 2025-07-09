@@ -18,14 +18,12 @@ export default function EditCelebModal({
     availability: celeb?.availability || "",
     known_for: celeb?.known_for || "",
     audience: celeb?.audience || "",
-    website: celeb?.website || "",
-    phone: celeb?.phone || "",
     tags: celeb?.tags?.join(", ") || "",
     featured: celeb?.featured || false,
   });
 
   const [newImageFile, setNewImageFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState(celeb?.profile_image || "");
+  const [imagePreview, setImagePreview] = useState(celeb?.image || "");
 
   useEffect(() => {
     const originalStyle = window.getComputedStyle(document.body).overflow;
@@ -46,6 +44,14 @@ export default function EditCelebModal({
   };
 
   const handleInputChange = (field, value) => {
+    if (field === "featured") {
+      console.log(
+        "Featured status changed:",
+        editingData.featured,
+        "to",
+        value
+      );
+    }
     setEditingData((prev) => ({
       ...prev,
       [field]: value,
@@ -182,8 +188,7 @@ export default function EditCelebModal({
                 key: "audience",
                 placeholder: "Kids, Teens, General",
               },
-              { label: "Website", key: "website", placeholder: "https://..." },
-              { label: "Phone", key: "phone", placeholder: "+1..." },
+
               {
                 label: "Tags (comma separated)",
                 key: "tags",

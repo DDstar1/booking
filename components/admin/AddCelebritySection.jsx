@@ -22,9 +22,7 @@ export default function AddCelebritySection({
     known_for: "",
     audience: "",
     bio: "",
-    phone: "",
-    website: "",
-    featured: false, // ✅ add this
+    featured: false,
   });
 
   const [newCelebImageFile, setNewCelebImageFile] = useState(null);
@@ -32,13 +30,13 @@ export default function AddCelebritySection({
   const [social_links, setSocialLinks] = useState([]);
 
   const handleSocialLinkChange = (index, field, value) => {
-    const updated = [...socialLinks];
+    const updated = [...social_links];
     updated[index][field] = value;
     setSocialLinks(updated);
   };
 
   const removeSocialLink = (index) => {
-    const updated = [...socialLinks];
+    const updated = [...social_links];
     updated.splice(index, 1);
     setSocialLinks(updated);
   };
@@ -77,9 +75,7 @@ export default function AddCelebritySection({
       known_for: newCeleb.known_for,
       audience: newCeleb.audience,
       bio: newCeleb.bio,
-      featured: false,
-      phone: newCeleb.phone,
-      website: newCeleb.website,
+      featured: newCeleb.featured,
       social_links: social_links,
     };
 
@@ -100,11 +96,9 @@ export default function AddCelebritySection({
         availability: "",
         years_active: "",
         known_for: "",
-        scrobbles: "",
         audience: "",
         bio: "",
-        phone: "",
-        website: "",
+        featured: false,
       });
       setNewCelebImageFile(null);
       setTagInput("");
@@ -117,7 +111,7 @@ export default function AddCelebritySection({
 
   return (
     <CollapsibleSection
-      title="\ud83c\udf1f Add New Celebrity"
+      title="🌟 Add New Celebrity"
       isOpen={collapsibles.addCelebrity}
       onToggle={() => toggleSection("addCelebrity")}
       colorScheme="purple"
@@ -138,6 +132,7 @@ export default function AddCelebritySection({
               className="w-full px-4 py-3 border border-gray-300 rounded-xl"
             />
           </div>
+
           {/* Featured Checkbox */}
           <div className="col-span-1 md:col-span-2 flex items-center gap-2 mt-4">
             <input
@@ -145,7 +140,10 @@ export default function AddCelebritySection({
               id="featured"
               checked={newCeleb.featured || false}
               onChange={(e) =>
-                setNewCeleb((prev) => ({ ...prev, featured: e.target.checked }))
+                setNewCeleb((prev) => ({
+                  ...prev,
+                  featured: e.target.checked,
+                }))
               }
               className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
             />
@@ -156,6 +154,7 @@ export default function AddCelebritySection({
               Mark as Featured
             </label>
           </div>
+
           {/* Tags */}
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">
@@ -218,6 +217,7 @@ export default function AddCelebritySection({
             </div>
           </div>
         </div>
+
         {/* Additional Fields */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {[
@@ -241,8 +241,11 @@ export default function AddCelebritySection({
               key: "known_for",
               placeholder: "e.g., Music, Acting",
             },
-            // { label: "Scrobbles", key: "scrobbles", placeholder: "e.g., 15M" },
-            { label: "Audience", key: "audience", placeholder: "e.g., 1.2M" },
+            {
+              label: "Audience",
+              key: "audience",
+              placeholder: "e.g., 1.2M",
+            },
           ].map(({ label, key, placeholder }) => (
             <div key={key} className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">
@@ -259,6 +262,19 @@ export default function AddCelebritySection({
               />
             </div>
           ))}
+        </div>
+        {/* Bio */}
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-gray-700">Bio</label>
+          <textarea
+            rows={5}
+            value={newCeleb.bio}
+            onChange={(e) =>
+              setNewCeleb((prev) => ({ ...prev, bio: e.target.value }))
+            }
+            placeholder="Write a short bio about the celebrity..."
+            className="w-full px-4 py-3 border border-gray-300 rounded-xl resize-none"
+          ></textarea>
         </div>
 
         {/* Image Upload */}
@@ -332,7 +348,7 @@ export default function AddCelebritySection({
           <button
             type="button"
             onClick={() =>
-              setSocialLinks([...socialLinks, { platform: "", url: "" }])
+              setSocialLinks([...social_links, { platform: "", url: "" }])
             }
             className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg"
           >
