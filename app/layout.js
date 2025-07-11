@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Nav";
+import { Analytics } from "@vercel/analytics/next";
 
 import Footer from "@/components/Footer";
 
@@ -26,9 +27,9 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Navigation />
-
         {children}
         <Footer />
+        <Analytics mode="production" />;
       </body>
     </html>
   );
