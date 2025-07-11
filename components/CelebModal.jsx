@@ -38,7 +38,7 @@ const CelebModalWrapper = ({ celeb_data, origin, closeModal }) => {
     <>
       {/* Overlay */}
       <motion.div
-        className="fixed inset-0 bg-black/40 backdrop-blur-sm z-60"
+        className="fixed inset-0 bg-black/40 backdrop-blur-sm z-60 "
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -47,7 +47,7 @@ const CelebModalWrapper = ({ celeb_data, origin, closeModal }) => {
 
       {/* Modal */}
       <motion.div
-        className="fixed z-70"
+        className="fixed z-70 max-h-[100dvh]"
         initial={{
           top: origin.y,
           left: origin.x,
@@ -97,7 +97,7 @@ const CelebModalWrapper = ({ celeb_data, origin, closeModal }) => {
             <div className="absolute w-full p-3 flex bg-gradient-to-b from-black/80 to-transparent items-center justify-between top-0 text-white">
               <div className="flex items-center space-x-3">
                 <img
-                  src={celeb_data.profileImage}
+                  src={celeb_data.image}
                   alt="Profile"
                   className="w-10 h-10 rounded-full border-2 border-white"
                 />
@@ -118,7 +118,7 @@ const CelebModalWrapper = ({ celeb_data, origin, closeModal }) => {
                 <div className="flex flex-col gap-3 text-sm text-gray-300">
                   <div className="border-b border-gray-700 pb-2">
                     <span className="font-semibold text-white">Fee Range:</span>{" "}
-                    {celeb_data.feeRange}
+                    {celeb_data.fee_range}
                   </div>
                   <div className="border-b border-gray-700 pb-2">
                     <span className="font-semibold text-white">
@@ -130,7 +130,7 @@ const CelebModalWrapper = ({ celeb_data, origin, closeModal }) => {
                     <span className="font-semibold text-white">
                       Years Active:
                     </span>{" "}
-                    {celeb_data.yearsActive}
+                    {celeb_data.years_active}
                   </div>
                 </div>
                 <div className="text-right space-y-2 font-semibold">
@@ -141,7 +141,7 @@ const CelebModalWrapper = ({ celeb_data, origin, closeModal }) => {
               <div className="border-t border-gray-700 mt-2 py-1">
                 <span className="font-semibold text-white">Known For:</span>{" "}
                 <span className="text-blue-400 hover:underline cursor-pointer">
-                  {celeb_data.knownFor}
+                  {celeb_data.known_for}
                 </span>
               </div>
             </div>

@@ -134,10 +134,10 @@ export default function CelebrityBookingLanding() {
       {/* FEATURED CELEBRITIES */}
       <LampDemo />
       {/* HOW IT WORKS */}
-      <section className="relative md:min-h-screen py-32 bg-black/40 overflow-hidden">
+      <section className="relative md:min-h-screen py-32 bg-black/40 overflow-hidden z-10">
         <BackgroundBeams className="pointer-events-none z-0" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4">
+        <div className="relative  max-w-7xl mx-auto px-4">
           <h2 className="text-4xl font-bold text-white text-center mb-8">
             How It <span className="text-blue-400">Works</span>
           </h2>
@@ -147,7 +147,10 @@ export default function CelebrityBookingLanding() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             {steps.map((step, i) => (
-              <div className="text-center bg-gray-900/50 rounded-xl p-6 border border-gray-700 transition-transform duration-300 hover:scale-[1.03]">
+              <div
+                key={i}
+                className="text-center bg-gray-900/50 rounded-xl p-6 border border-gray-700 transition-transform duration-300 hover:scale-[1.03]"
+              >
                 <div className="bg-blue-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 shadow-md">
                   {step.icon}
                 </div>

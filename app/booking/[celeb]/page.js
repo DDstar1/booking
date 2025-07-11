@@ -1,13 +1,58 @@
-import { notFound } from "next/navigation";
+"use client";
+
 import { use } from "react";
 import celebrities from "@/utils/celebrities";
 import BookingForm from "@/components/BookingForm";
 
-export default function CelebPage({ params }) {
-  const { celeb } = use(params);
-  const celebData = celebrities.find((c) => c.id === celeb);
+import { useEffect, useState } from "react";
+import { notFound, useParams } from "next/navigation";
 
-  if (!celebData) return notFound();
+export default function CelebPage() {
+  const { celeb } = useParams();
+  const [celebData, setCelebData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error404, setError404] = useState(false);
+
+  useEffect(() => {
+    const fetchCeleb = async () => {
+      try {
+        const res = await fetch(`/api/get_celebrities`);
+
+        if (!res.ok) throw new Error("Failed to fetch celebrities");
+
+        const allCelebs = await res.json();
+        const selectedCeleb = allCelebs.find(
+          (c) => c.id === celeb || c.slug === celeb
+        );
+
+        if (!selectedCeleb) {
+          setError404(true);
+          return;
+        }
+
+        setCelebData(selectedCeleb);
+      } catch (err) {
+        console.error("Error loading celeb:", err);
+        setError404(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCeleb();
+  }, [celeb]);
+
+  if (loading) {
+    return (
+      <div className="text-center py-20 text-white">
+        <p>Loading celebrity details...</p>
+      </div>
+    );
+  }
+
+  if (error404 || !celebData) {
+    return notFound();
+  }
 
   return (
     <div className="bg-black min-h-screen">
@@ -17,7 +62,7 @@ export default function CelebPage({ params }) {
             {/* Image */}
             <div className="flex justify-center md:justify-start">
               <img
-                src={celebData.profileImage}
+                src={celebData.image}
                 alt={celebData.name}
                 className="w-40 h-40 rounded-full border-4 border-blue-600 shadow-md object-cover"
               />
@@ -65,7 +110,7 @@ export default function CelebPage({ params }) {
           <div className="mt-6 text-sm bg-gray-800/60 p-4 rounded-md border border-gray-700 text-gray-300">
             <p className="font-semibold text-white">Speaking/Appearance Fee:</p>
             <p className="whitespace-pre-line text-gray-300">
-              {celebData.feeRange?.replace(/(REGULAR|VIP|VVIP)/g, "\n$1")}
+              {celebData.fee_range?.replace(/(REGULAR|VIP|VVIP)/g, "\n$1")}
             </p>
           </div>
 

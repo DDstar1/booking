@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   MapPin,
   Phone,
@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 import MapToggleGallery from "@/components/MapToggleGallery";
 
+// Your provided Supabase client
+
 export default function ContactPage() {
   const [formData, setFormData] = useState({
     name: "",
@@ -21,6 +23,10 @@ export default function ContactPage() {
     message: "",
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [imageList, setImageList] = useState([]);
+  const [mapUrl, setMapUrl] = useState("");
+  const [loadingMapData, setLoadingMapData] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleInputChange = (e) => {
     setFormData({
@@ -29,20 +35,59 @@ export default function ContactPage() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitted(true);
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        eventType: "",
-        message: "",
+    setIsSubmitting(true);
+
+    try {
+      const res = await fetch("/api/contact_us", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
-    }, 3000);
+
+      const result = await res.json();
+
+      if (result.success) {
+        setIsSubmitted(true);
+        setTimeout(() => {
+          setIsSubmitted(false);
+          setFormData({
+            name: "",
+            email: "",
+            phone: "",
+            eventType: "",
+            message: "",
+          });
+        }, 7000);
+      } else {
+        alert("Something went wrong: " + result.error);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Failed to send message.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  useEffect(() => {
+    const fetchAssets = async () => {
+      try {
+        const res = await fetch("/api/contact_assets");
+        const data = await res.json();
+
+        setImageList(data.images);
+        setMapUrl(data.mapUrl);
+      } catch (err) {
+        console.error("Failed to load contact assets:", err);
+      } finally {
+        setLoadingMapData(false);
+      }
+    };
+
+    fetchAssets();
+  }, []);
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -161,9 +206,42 @@ export default function ContactPage() {
 
                   <button
                     onClick={handleSubmit}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
+                    className={`w-full bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 transform flex items-center justify-center ${
+                      isSubmitting
+                        ? "opacity-70 cursor-not-allowed"
+                        : "hover:scale-105"
+                    }`}
+                    disabled={isSubmitting}
                   >
-                    Send Message <Send className="ml-2 h-5 w-5" />
+                    {isSubmitting ? (
+                      <>
+                        <svg
+                          className="animate-spin h-5 w-5 mr-2 text-white"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8z"
+                          ></path>
+                        </svg>
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        Send Message <Send className="ml-2 h-5 w-5" />
+                      </>
+                    )}
                   </button>
                 </div>
               )}
@@ -246,15 +324,9 @@ export default function ContactPage() {
       </section>
 
       {/* Map */}
-      <MapToggleGallery
-        iframeSrc="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11655.503600234755!2d-79.3642093202399!3d43.086104320393694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d34cc67db54b1b%3A0x39c9ba49817d78a0!2sOntario%20Stallions%20for%20the%20Ontario%20Horseman%20Incentive!5e0!3m2!1sen!2sng!4v1750591743146!5m2!1sen!2sng"
-        imageList={[
-          "https://swiperjs.com/demos/images/nature-1.jpg",
-          "https://swiperjs.com/demos/images/nature-2.jpg",
-          "https://swiperjs.com/demos/images/nature-3.jpg",
-          "https://swiperjs.com/demos/images/nature-4.jpg",
-        ]}
-      />
+      {!loadingMapData && (
+        <MapToggleGallery iframeSrc={mapUrl} imageList={imageList} />
+      )}
 
       {/* CTA */}
       <section className="py-20 bg-gradient-to-r from-blue-600/20 to-purple-600/20">

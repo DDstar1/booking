@@ -12,7 +12,7 @@ import BuildingImagesSection from "@/components/admin/BuildingImagesSection";
 import MapUrlSection from "@/components/admin/MapUrlSection";
 import AddCelebritySection from "@/components/admin/AddCelebritySection";
 import ManageCelebritiesSection from "@/components/admin/ManageCelebritiesSection";
-import EditCelebModal from "@/components/EditCelebModal";
+import EditCelebModal from "@/components/admin/EditCelebModal";
 
 const supabase = createClient(
   "https://dawexksmkjeubjhgchjt.supabase.co",

@@ -115,7 +115,7 @@ export default function EditCelebModal({
           transition: { duration: 0.3 },
         }}
       >
-        <div className="relative w-full bg-black/60 rounded-2xl md:max-w-[550px] mx-auto overflow-hidden shadow-xl backdrop-blur-md">
+        <div className="relative max-h-[100dvh] w-full bg-black/60 rounded-2xl md:max-w-[550px] mx-auto overflow-hidden shadow-xl backdrop-blur-md">
           <button
             onClick={closeModal}
             className="absolute top-4 right-4 w-8 h-8 bg-white text-black rounded-full text-base font-bold z-50"

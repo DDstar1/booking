@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@heroui/react": "^2.7.11",
     "@supabase/supabase-js": "^2.50.1",
     "@tsparticles/engine": "^3.8.1",
@@ -24,6 +25,7 @@
     "react-calendar": "^6.0.0",
     "react-dom": "^19.0.0",
     "react-toastify": "^11.0.5",
+    "resend": "^4.6.0",
     "slugify": "^1.6.6",
     "swiper": "^11.2.8",
     "tailwind-merge": "^3.3.1",
