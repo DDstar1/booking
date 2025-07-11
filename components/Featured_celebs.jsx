@@ -12,14 +12,6 @@ import CelebCard from "@/components/CelebCard";
 import CelebModalWrapper from "@/components/CelebModal";
 import ShinyUnderline from "./ShinyUnderline";
 
-import { createClient } from "@supabase/supabase-js";
-
-// Initialize Supabase client
-const supabase = createClient(
-  "https://dawexksmkjeubjhgchjt.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRhd2V4a3Nta2pldWJqaGdjaGp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA3NTY5MDEsImV4cCI6MjA2NjMzMjkwMX0.7YGQOcTZPtZwvDAAZK-gDVBzQphIKjrUsD0OxH5iWjo"
-);
-
 export function LampDemo() {
   const [selectedCeleb, setSelectedCeleb] = useState(null);
   const [origin, setOrigin] = useState(null);
@@ -42,22 +34,20 @@ export function LampDemo() {
     setOrigin(null);
   };
 
-  // Fetch featured celebrities from Supabase
+  // Fetch featured celebrities from custom API route
   useEffect(() => {
     const fetchCelebrities = async () => {
-      const { data, error } = await supabase
-        .from("celebrities")
-        .select("*")
-        .eq("featured", true)
-        .order("created_at", { ascending: false });
+      try {
+        const res = await fetch("/api/get_celebrities");
+        const data = await res.json();
 
-      if (error) {
-        console.error("Error fetching celebrities:", error);
-      } else {
-        setFeaturedCelebs(data);
+        const featured = data.filter((celeb) => celeb.featured);
+        setFeaturedCelebs(featured);
+      } catch (err) {
+        console.error("Error fetching celebrities:", err);
+      } finally {
+        setLoading(false);
       }
-
-      setLoading(false);
     };
 
     fetchCelebrities();

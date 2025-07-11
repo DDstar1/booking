@@ -101,9 +101,11 @@ export default function CelebrityBookingLanding() {
             className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
           >
             <Link href="/list">
-              <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all transform flex items-center justify-center">
-                Browse Celebrities <ArrowRight className="ml-2 h-5 w-5" />
-              </button>
+              <center>
+                <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all transform flex items-center justify-center">
+                  Browse Celebrities <ArrowRight className="ml-2 h-5 w-5" />
+                </button>
+              </center>
             </Link>
           </motion.div>
           <motion.div
@@ -246,7 +248,7 @@ export default function CelebrityBookingLanding() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-semibold text-lg transition-transform transform hover:scale-105">
-              Start Booking Now
+              <Link href="/list">Start Booking Now</Link>
             </button>
             <button className="border-2 border-gray-700 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-800/50">
               Speak to Our Team

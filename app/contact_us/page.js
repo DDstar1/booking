@@ -11,7 +11,7 @@ import {
   CheckCircle,
 } from "lucide-react";
 import MapToggleGallery from "@/components/MapToggleGallery";
-
+import Link from "next/link";
 // Your provided Supabase client
 
 export default function ContactPage() {
@@ -341,7 +341,7 @@ export default function ContactPage() {
               Start Live Chat
             </button>
             <button className="border-2 border-gray-700 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-800/50 transition-all duration-300">
-              Browse Celebrities
+              <Link href="/list">Browse Celebrities</Link>
             </button>
           </div>
         </div>

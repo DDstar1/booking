@@ -7,7 +7,7 @@ const supabase = createClient(
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRhd2V4a3Nta2pldWJqaGdjaGp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA3NTY5MDEsImV4cCI6MjA2NjMzMjkwMX0.7YGQOcTZPtZwvDAAZK-gDVBzQphIKjrUsD0OxH5iWjo"
 );
 
-export default async function GET(req, res) {
+export async function GET() {
   try {
     const { data: images, error: imgError } = await supabase
       .from("building_images")
@@ -24,12 +24,24 @@ export default async function GET(req, res) {
 
     if (settingError) throw settingError;
 
-    res.status(200).json({
-      images: images.map((img) => img.url),
-      mapUrl: setting.value,
-    });
+    console.log(setting);
+    console.log(images);
+
+    return new Response(
+      JSON.stringify({
+        images: images.map((img) => img.url),
+        mapUrl: setting.value,
+      }),
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   } catch (error) {
     console.error("API Error:", error);
-    res.status(500).json({ error: "Failed to load contact assets" });
+    return new Response(
+      JSON.stringify({ error: "Failed to load contact assets" }),
+      { status: 500 }
+    );
   }
 }
