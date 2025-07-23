@@ -2,13 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { Calendar, Users, Award, ArrowRight, Play } from "lucide-react";
-import { BackgroundBeams } from "@/components/ui/BackgroundBeam"; // Assuming you have a BackgroundBeams component
+import { BackgroundBeams } from "@/components/ui/BackgroundBeam";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
-import { LampDemo } from "@/components/Featured_celebs"; // Assuming you have a LampDemo component
-import { HoverBorderGradient } from "@/components/ui/HoverBorderGradient"; // Assuming you have a HoverBorderGradient component
-import { SparklesCore } from "@/components/ui/SparklesCore"; // Assuming you have a SparklesCore component
+import { LampDemo } from "@/components/Featured_celebs";
+import { HoverBorderGradient } from "@/components/ui/HoverBorderGradient";
+import { SparklesCore } from "@/components/ui/SparklesCore";
 import ShinyUnderline from "@/components/ShinyUnderline";
 
 export default function CelebrityBookingLanding() {
@@ -77,21 +77,21 @@ export default function CelebrityBookingLanding() {
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black"></div>
-
         <div className="relative max-w-7xl mx-auto px-4 text-center">
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-6xl md:text-8xl font-bold text-white mb-6 leading-tight"
+            className="text-6xl md:text-8xl font-black text-white mb-6 leading-tight tracking-tight font-display"
           >
-            Book <span className="text-blue-400">Celebrity</span> Talent
+            Book <span className="text-blue-400 font-extrabold">Celebrity</span>{" "}
+            Talent
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto"
+            className="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto font-sans font-light leading-relaxed"
           >
             Secure iconic talent for unforgettable moments—corporate, personal,
             or once-in-a-lifetime events.
@@ -102,7 +102,7 @@ export default function CelebrityBookingLanding() {
           >
             <Link href="/list">
               <center>
-                <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all transform flex items-center justify-center">
+                <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all transform flex items-center justify-center font-sans tracking-wide">
                   Browse Celebrities <ArrowRight className="ml-2 h-5 w-5" />
                 </button>
               </center>
@@ -120,10 +120,12 @@ export default function CelebrityBookingLanding() {
               { label: "Rating", value: "4.9★" },
             ].map((stat, idx) => (
               <div key={idx} className="text-center">
-                <div className="text-3xl font-bold text-white">
+                <div className="text-3xl font-bold text-white font-display tracking-tight">
                   {stat.value}
                 </div>
-                <div className="text-sm">{stat.label}</div>
+                <div className="text-sm font-sans font-medium tracking-wide uppercase">
+                  {stat.label}
+                </div>
               </div>
             ))}
           </motion.div>
@@ -133,33 +135,37 @@ export default function CelebrityBookingLanding() {
           src="/bubble-side-divider.svg"
         />
       </section>
+
       {/* FEATURED CELEBRITIES */}
       <LampDemo />
+
       {/* HOW IT WORKS */}
       <section className="relative md:min-h-screen py-32 bg-black/40 overflow-hidden z-10">
         <BackgroundBeams className="pointer-events-none z-0" />
 
-        <div className="relative  max-w-7xl mx-auto px-4">
-          <h2 className="text-4xl font-bold text-white text-center mb-8">
+        <div className="relative max-w-7xl mx-auto px-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-8 font-display tracking-tight">
             How It <span className="text-blue-400">Works</span>
           </h2>
           <div className="relative pt-8">
             <ShinyUnderline />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-16">
             {steps.map((step, i) => (
               <div
                 key={i}
-                className="text-center bg-gray-900/50 rounded-xl p-6 border border-gray-700 transition-transform duration-300 hover:scale-[1.03]"
+                className="text-center bg-gray-900/50 rounded-xl p-8 border border-gray-700 transition-transform duration-300 hover:scale-[1.03]"
               >
                 <div className="bg-blue-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 shadow-md">
                   {step.icon}
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">
+                <h3 className="text-xl font-bold text-white mb-4 font-display tracking-tight">
                   {step.title}
                 </h3>
-                <p className="text-gray-300">{step.description}</p>
+                <p className="text-gray-300 font-sans leading-relaxed">
+                  {step.description}
+                </p>
               </div>
             ))}
           </div>
@@ -167,9 +173,9 @@ export default function CelebrityBookingLanding() {
       </section>
 
       {/* TESTIMONIALS */}
-      <section className=" relative py-20">
-        <div className="max-w-4xl mx-auto  px-4 text-center">
-          <h2 className="text-4xl font-bold text-white mb-3">
+      <section className="relative py-20">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-3 font-display tracking-tight">
             What Our <span className="text-blue-400">Clients Say</span>
           </h2>
           <div className="relative pt-8">
@@ -183,7 +189,7 @@ export default function CelebrityBookingLanding() {
                 minSize={0.4}
                 maxSize={1}
                 particleDensity={1200}
-                className="w-full h-full "
+                className="w-full h-full"
                 particleColor="#FFFFFF"
               />
 
@@ -191,7 +197,7 @@ export default function CelebrityBookingLanding() {
               <div className="absolute inset-0 w-full h-full bg-black [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"></div>
             </div>
           </div>
-          <div className="relative h-72">
+          <div className="relative h-72 mt-12">
             <AnimatePresence>
               {testimonials.map(
                 (t, i) =>
@@ -210,11 +216,15 @@ export default function CelebrityBookingLanding() {
                           alt={t.name}
                           className="w-16 h-16 rounded-full mx-auto mb-6 object-cover"
                         />
-                        <p className="text-gray-300 text-lg mb-6 italic">
+                        <p className="text-gray-300 text-lg mb-6 italic font-sans leading-relaxed">
                           "{t.text}"
                         </p>
-                        <h4 className="text-white font-bold">{t.name}</h4>
-                        <p className="text-blue-400 text-sm">{t.company}</p>
+                        <h4 className="text-white font-bold font-display text-lg">
+                          {t.name}
+                        </h4>
+                        <p className="text-blue-400 text-sm font-sans font-medium tracking-wide">
+                          {t.company}
+                        </p>
                       </div>
                     </motion.div>
                   )
@@ -236,21 +246,23 @@ export default function CelebrityBookingLanding() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 bg-gray-800/30">
+      <section className="py-24 font-montserrat bg-gray-800/30">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold text-white mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 font-display tracking-tight">
             Ready to Book Your Next{" "}
             <span className="text-blue-400">Celebrity</span>?
           </h2>
-          <p className="text-xl text-gray-300 mb-8">
+          <p className="text-xl text-gray-300 mb-8 font-sans font-light leading-relaxed max-w-2xl mx-auto">
             Join thousands of clients who've made their moments iconic with our
             talent.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-semibold text-lg transition-transform transform hover:scale-105">
-              <Link href="/list">Start Booking Now</Link>
-            </button>
-            <button className="border-2 border-gray-700 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-800/50">
+            <Link href="/list">
+              <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-semibold text-lg transition-transform transform hover:scale-105 font-sans tracking-wide">
+                Start Booking Now
+              </button>
+            </Link>
+            <button className="border-2 border-gray-700 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-800/50 font-sans tracking-wide">
               Speak to Our Team
             </button>
           </div>

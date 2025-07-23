@@ -6,10 +6,15 @@
 } */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--background, #ffffff);
+  --color-foreground: var(--foreground, #000000);
+
+  --font-sans: var(--font-geist-sans, Arial, Helvetica, sans-serif);
+  --font-mono: var(--font-geist-mono, ui-monospace, SFMono-Regular, monospace);
+  --font-inter: var(--font-inter, Arial, sans-serif);
+  --font-playfair: var(--font-playfair, "Times New Roman", serif);
+  --font-poppins: var(--font-poppins, "Segoe UI", sans-serif);
+  --font-montserrat: var(--font-montserrat, "Segoe UI", sans-serif);
 }
 
 /* @media (prefers-color-scheme: dark) {
