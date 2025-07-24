@@ -5,6 +5,7 @@ import { Calendar, Users, Award, ArrowRight, Play } from "lucide-react";
 import { BackgroundBeams } from "@/components/ui/BackgroundBeam";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import HowItWorks from "@/components/HowItWorks";
 
 import { LampDemo } from "@/components/Featured_celebs";
 import { HoverBorderGradient } from "@/components/ui/HoverBorderGradient";
@@ -40,8 +41,9 @@ export default function CelebrityBookingLanding() {
       name: "Jessica Williams",
       company: "Tech Innovators Corp",
       text: "StarBook made our company retreat unforgettable. The celebrity speaker was perfect for our audience!",
+
       image:
-        "https://images.unsplash.com/photo-1494790108755-2616c056ca42?w=100&h=100&fit=crop&crop=face",
+        "https://i.pinimg.com/1200x/54/e3/ce/54e3ce9dbbac4504a9985b8deafa18fa.jpg",
     },
     {
       name: "Robert Chen",
@@ -140,37 +142,7 @@ export default function CelebrityBookingLanding() {
       <LampDemo />
 
       {/* HOW IT WORKS */}
-      <section className="relative md:min-h-screen py-32 bg-black/40 overflow-hidden z-10">
-        <BackgroundBeams className="pointer-events-none z-0" />
-
-        <div className="relative max-w-7xl mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-8 font-display tracking-tight">
-            How It <span className="text-blue-400">Works</span>
-          </h2>
-          <div className="relative pt-8">
-            <ShinyUnderline />
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-16">
-            {steps.map((step, i) => (
-              <div
-                key={i}
-                className="text-center bg-gray-900/50 rounded-xl p-8 border border-gray-700 transition-transform duration-300 hover:scale-[1.03]"
-              >
-                <div className="bg-blue-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 shadow-md">
-                  {step.icon}
-                </div>
-                <h3 className="text-xl font-bold text-white mb-4 font-display tracking-tight">
-                  {step.title}
-                </h3>
-                <p className="text-gray-300 font-sans leading-relaxed">
-                  {step.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <HowItWorks />
 
       {/* TESTIMONIALS */}
       <section className="relative py-20">

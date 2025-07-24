@@ -65,31 +65,35 @@ export function LampDemo() {
             <ShinyUnderline />
           </div>
 
-          {loading ? (
-            <p className="text-center text-gray-400 mt-10">Loading...</p>
-          ) : featuredCelebs.length === 0 ? (
-            <p className="text-center text-gray-400 mt-10">
-              No featured celebrities found.
-            </p>
-          ) : (
-            <Swiper
-              effect="cards"
-              grabCursor={true}
-              modules={[EffectCards]}
-              className="w-[85%] max-w-sm mx-auto"
-            >
-              {featuredCelebs.map((celeb) => (
-                <SwiperSlide
-                  key={celeb.id}
-                  onClick={(e) => handleClick(celeb, e)}
-                >
-                  <div className="relative rounded-2xl overflow-hidden">
-                    <CelebCard celeb={celeb} />
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          )}
+          <div className="w-[85%] max-w-sm mx-auto min-h-[400px] flex items-center justify-center">
+            {loading ? (
+              <div className="flex flex-col items-center justify-center text-gray-400">
+                <div className="w-6 h-6 border-2 border-blue-400 border-t-transparent rounded-full animate-spin mb-2"></div>
+              </div>
+            ) : featuredCelebs.length === 0 ? (
+              <p className="text-center text-gray-400">
+                No featured celebrities found.
+              </p>
+            ) : (
+              <Swiper
+                effect="cards"
+                grabCursor={true}
+                modules={[EffectCards]}
+                className="w-full"
+              >
+                {featuredCelebs.map((celeb) => (
+                  <SwiperSlide
+                    key={celeb.id}
+                    onClick={(e) => handleClick(celeb, e)}
+                  >
+                    <div className="relative rounded-2xl overflow-hidden">
+                      <CelebCard celeb={celeb} />
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            )}
+          </div>
         </div>
       </section>
 
