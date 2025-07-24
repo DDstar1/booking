@@ -78,7 +78,7 @@ const CelebModalWrapper = ({ celeb_data, origin, closeModal }) => {
         }}
       >
         {/* Modal Content */}
-        <div className="relative w-full  bg-black/60 rounded-2xl md:max-w-[400px] mx-auto overflow-hidden shadow-xl backdrop-blur-md">
+        <div className="relative w-full max-[90vh] bg-black/60 rounded-2xl md:max-w-[400px] mx-auto overflow-hidden shadow-xl backdrop-blur-md">
           {/* Close Button */}
           <button
             onClick={closeModal}

@@ -130,42 +130,44 @@ const CelebritiesPage = () => {
           placeholder="Search celebrities..."
           className="w-full p-2 mb-4 rounded border border-gray-700 bg-[#1a1a1a] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-
-        {/* Toggle Filters Button */}
-        <div className="flex justify-between items-center mb-2">
-          <h3 className="text-lg font-semibold">Filter by Tags</h3>
-          <button
-            onClick={() => setShowFilters((prev) => !prev)}
-            className="text-sm text-blue-400 underline"
-          >
-            {showFilters ? "Collapse" : "Expand"}
-          </button>
-        </div>
-
-        {/* Animated Filter Tags */}
-        <motion.div
-          variants={collapseVariants}
-          animate={showFilters ? "expanded" : "collapsed"}
-          initial={false}
-          className={`overflow-hidden mb-6 ${
-            showFilters ? "flex flex-wrap gap-2" : "flex gap-2 overflow-x-auto"
-          }`}
-        >
-          {allTags.map((tag) => (
+        <div className="mb-5">
+          {/* Toggle Filters Button */}
+          <div className="flex justify-between items-center mb-2">
+            <h3 className="text-lg font-semibold">Filter by Tags</h3>
             <button
-              key={tag}
-              onClick={() => handleTagClick(tag)}
-              className={`px-3 py-1 whitespace-nowrap rounded-full border text-sm flex-shrink-0 ${
-                activeTags.includes(tag)
-                  ? "bg-blue-600 text-white"
-                  : "bg-[#2a2a2a] text-gray-300 border-gray-600"
-              }`}
+              onClick={() => setShowFilters((prev) => !prev)}
+              className="text-sm text-blue-400 underline"
             >
-              {tag}
+              {showFilters ? "Collapse" : "Expand"}
             </button>
-          ))}
-        </motion.div>
+          </div>
 
+          {/* Animated Filter Tags */}
+          <motion.div
+            variants={collapseVariants}
+            animate={showFilters ? "expanded" : "collapsed"}
+            initial={false}
+            className={`overflow-hidden mb-6 ${
+              showFilters
+                ? "flex flex-wrap gap-2"
+                : "flex gap-2 overflow-x-auto"
+            }`}
+          >
+            {allTags.map((tag) => (
+              <button
+                key={tag}
+                onClick={() => handleTagClick(tag)}
+                className={`px-3 py-1 whitespace-nowrap rounded-full border text-sm flex-shrink-0 ${
+                  activeTags.includes(tag)
+                    ? "bg-blue-600 text-white"
+                    : "bg-[#2a2a2a] text-gray-300 border-gray-600"
+                }`}
+              >
+                {tag}
+              </button>
+            ))}
+          </motion.div>
+        </div>
         {/* Celebrity Cards Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 overflow-y-auto">
           {paginatedCelebs.map((celeb) => (
@@ -178,9 +180,14 @@ const CelebritiesPage = () => {
         </div>
 
         {/* Pagination */}
-        <div className="flex justify-center sticky bottom-1">
-          <AnimatedPagination total={totalPages} onChange={handlePageChange} />
-        </div>
+        {totalPages > 1 && (
+          <div className="flex justify-center sticky bottom-1">
+            <AnimatedPagination
+              total={totalPages}
+              onChange={handlePageChange}
+            />
+          </div>
+        )}
       </div>
 
       {/* Modal */}
