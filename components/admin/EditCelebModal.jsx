@@ -20,6 +20,9 @@ export default function EditCelebModal({
     audience: celeb?.audience || "",
     tags: celeb?.tags?.join(", ") || "",
     featured: celeb?.featured || false,
+    country: celeb?.country || "",
+    age: celeb?.age || "",
+    gender: celeb?.gender || "",
   });
 
   const [newImageFile, setNewImageFile] = useState(null);
@@ -162,7 +165,17 @@ export default function EditCelebModal({
             {/* Inputs */}
             {[
               { label: "Name *", key: "name", placeholder: "Celebrity name" },
-
+              {
+                label: "Country",
+                key: "country",
+                placeholder: "USA, UK, Nigeria...",
+              },
+              { label: "Age", key: "age", placeholder: "30" },
+              {
+                label: "Gender",
+                key: "gender",
+                placeholder: "Male, Female, Other",
+              },
               {
                 label: "Fee Range",
                 key: "fee_range",
@@ -198,7 +211,7 @@ export default function EditCelebModal({
               <div key={key}>
                 <label className="block text-sm font-semibold">{label}</label>
                 <input
-                  type="text"
+                  type={label.toLowerCase().includes("age") ? "number" : "text"}
                   value={editingData[key]}
                   onChange={(e) => handleInputChange(key, e.target.value)}
                   className="w-full px-3 py-2 bg-gray-800/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -236,7 +249,7 @@ export default function EditCelebModal({
             </div>
 
             {/* Buttons */}
-            <div className="flex justify-between gap-4 pt-4">
+            <div className="flex justify-between gap-4  mb-15">
               <button
                 onClick={closeModal}
                 className="flex-1 bg-gray-600 hover:bg-gray-700 py-2 rounded-xl font-semibold text-sm"

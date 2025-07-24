@@ -178,17 +178,7 @@ const handleSaveEdit = async (
   setUploading(true);
 
   try {
-    let updatedData = {
-      name: editData.name,
-      bio: editData.bio,
-      featured: editData.featured,
-      fee_range: editData.fee_range,
-      years_active: editData.years_active,
-      availability: editData.availability,
-      known_for: editData.known_for,
-      audience: editData.audience,
-      tags: editData.tags, // Already converted to array in EditCelebModal
-    };
+    const { imageFile, ...updatedData } = editData;
 
     // If there's a new image file, handle deletion and upload
     if (editData.imageFile) {

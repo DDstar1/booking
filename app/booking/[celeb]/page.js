@@ -44,8 +44,8 @@ export default function CelebPage() {
 
   if (loading) {
     return (
-      <div className="text-center py-20 text-white">
-        <p>Loading celebrity details...</p>
+      <div className="min-h-screen bg-[#0f0f0f] text-white flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -84,9 +84,15 @@ export default function CelebPage() {
                 {/* Bio Info */}
                 <div className="mt-2 text-sm space-y-1">
                   <p>
-                    <span className="font-semibold text-gray-400">Born:</span>{" "}
+                    <span className="font-semibold text-gray-400">Age:</span>{" "}
                     <span className="text-gray-300">
-                      {celebData.dob || "N/A"}
+                      {celebData.age || "N/A"}
+                    </span>
+                  </p>
+                  <p>
+                    <span className="font-semibold text-gray-400">Gender:</span>{" "}
+                    <span className="text-gray-300">
+                      {celebData.gender || "N/A"}
                     </span>
                   </p>
                   <p>
@@ -116,9 +122,6 @@ export default function CelebPage() {
 
           {/* Tags */}
           <div className="mt-4 flex flex-wrap gap-2 justify-center md:justify-start text-xs font-semibold">
-            <span className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-full transition-colors">
-              {celebData.gender || "N/A"}
-            </span>
             <span className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-full transition-colors">
               {celebData.name}
             </span>

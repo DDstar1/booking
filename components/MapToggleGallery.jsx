@@ -19,7 +19,10 @@ const MapToggleGallery = ({ iframeSrc, imageList = [] }) => {
           showMap ? "max-w-full" : "max-w-xl"
         }`}
       >
-        <div className="flex justify-end mb-4">
+        <div className="flex justify-between mb-4">
+          <h2 className="text-3xl font-semibold text-white">
+            Location & <span className="text-blue-400">Gallery</span>
+          </h2>
           <button
             onClick={() => setShowMap((prev) => !prev)}
             className="flex items-center gap-2 px-4 py-2 rounded-full border border-gray-300 text-sm hover:bg-gray-100 transition"

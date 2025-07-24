@@ -96,7 +96,15 @@ export default function ManageCelebritiesSection({
                     <h3 className="font-bold text-xl mb-2 text-gray-800">
                       {celeb.name}
                     </h3>
-
+                    <p className="text-gray-500 text-sm mb-1">
+                      <strong>Country:</strong> {celeb.country || "N/A"}
+                    </p>
+                    <p className="text-gray-500 text-sm mb-1">
+                      <strong>Age:</strong> {celeb.age || "N/A"}
+                    </p>
+                    <p className="text-gray-500 text-sm mb-1">
+                      <strong>Gender:</strong> {celeb.gender || "N/A"}
+                    </p>
                     <p className="text-gray-500 text-sm mb-1">
                       <strong>Fee:</strong> {celeb.fee_range || "N/A"}
                     </p>

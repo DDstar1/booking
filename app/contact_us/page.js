@@ -324,11 +324,16 @@ export default function ContactPage() {
       </section>
 
       {/* Map */}
-      {!loadingMapData && (
+
+      {loadingMapData ? (
+        <div className="h-96 flex items-center justify-center">
+          <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      ) : (
         <MapToggleGallery iframeSrc={mapUrl} imageList={imageList} />
       )}
 
-      {/* CTA */}
+      {/* CTA 
       <section className="py-20 bg-gradient-to-r from-blue-600/20 to-purple-600/20">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-6">
@@ -345,7 +350,7 @@ export default function ContactPage() {
             </button>
           </div>
         </div>
-      </section>
+      </section>*/}
     </div>
   );
 }

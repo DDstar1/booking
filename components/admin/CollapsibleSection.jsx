@@ -1,4 +1,5 @@
-// components/CollapsibleSection.js
+import { motion, AnimatePresence } from "framer-motion";
+
 export default function CollapsibleSection({
   title,
   isOpen,
@@ -24,11 +25,23 @@ export default function CollapsibleSection({
       >
         {title} {isOpen ? "▲" : "▼"}
       </button>
-      {isOpen && (
-        <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
-          {children}
-        </div>
-      )}
+
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            key="content"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="overflow-hidden"
+          >
+            <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
+              {children}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

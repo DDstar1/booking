@@ -23,6 +23,9 @@ export default function AddCelebritySection({
     audience: "",
     bio: "",
     featured: false,
+    country: "",
+    age: "",
+    gender: "",
   });
 
   const [newCelebImageFile, setNewCelebImageFile] = useState(null);
@@ -76,6 +79,9 @@ export default function AddCelebritySection({
       audience: newCeleb.audience,
       bio: newCeleb.bio,
       featured: newCeleb.featured,
+      country: newCeleb.country,
+      age: newCeleb.age,
+      gender: newCeleb.gender,
       social_links: social_links,
     };
 
@@ -222,6 +228,21 @@ export default function AddCelebritySection({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {[
             {
+              label: "Country",
+              key: "country",
+              placeholder: "e.g., Nigeria",
+            },
+            {
+              label: "Age",
+              key: "age",
+              placeholder: "e.g., 35",
+            },
+            {
+              label: "Gender",
+              key: "gender",
+              placeholder: "e.g., Male / Female / Other",
+            },
+            {
               label: "Fee Range",
               key: "fee_range",
               placeholder: "$5,000–$10,000",
@@ -252,7 +273,7 @@ export default function AddCelebritySection({
                 {label}
               </label>
               <input
-                type="text"
+                type={label.toLowerCase().includes("age") ? "number" : "text"}
                 value={newCeleb[key]}
                 onChange={(e) =>
                   setNewCeleb((prev) => ({ ...prev, [key]: e.target.value }))
@@ -306,7 +327,7 @@ export default function AddCelebritySection({
           </div>
         </div>
 
-        {/* Social Links */}
+        {/* Social Links 
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-700">
             Social Links
@@ -354,7 +375,7 @@ export default function AddCelebritySection({
           >
             + Add Social Link
           </button>
-        </div>
+        </div>*/}
 
         {/* Submit Button */}
         <button
