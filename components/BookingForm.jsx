@@ -41,9 +41,28 @@ export default function BookingForm({ celebName }) {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitted form:", formData);
+
+    try {
+      const res = await fetch("/api/book_celeb_form", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await res.json();
+      if (result.success) {
+        alert("Booking request sent successfully!");
+      } else {
+        alert(`Error: ${result.error || "Something went wrong"}`);
+      }
+    } catch (error) {
+      console.error("Submission failed:", error);
+      alert("Something went wrong. Please try again.");
+    }
   };
 
   const renderDots = () => (
@@ -54,8 +73,8 @@ export default function BookingForm({ celebName }) {
         const bgColor = isCompleted
           ? "bg-green-500"
           : isCurrent
-          ? "bg-yellow-500"
-          : "bg-gray-400";
+            ? "bg-yellow-500"
+            : "bg-gray-400";
         return (
           <div key={index} className={`w-3 h-3 rounded-full ${bgColor}`}></div>
         );
