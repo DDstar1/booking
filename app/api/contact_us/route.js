@@ -87,9 +87,7 @@ export async function POST(req) {
       <p style="margin-top:16px; font-size:16px; color:#D1D5DB;">– The Starbook Team</p>
     </div>
 
-    <p style="font-size:12px; color:#9CA3AF; text-align:center; margin-top:24px;">
-      This is an automated confirmation from elitestarbook.com
-    </p>
+   
   </div>
 `,
     });

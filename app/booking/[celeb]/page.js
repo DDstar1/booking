@@ -76,11 +76,6 @@ export default function CelebPage() {
                 </h1>
                 <p className="text-sm text-gray-400">{celebData.role}</p>
 
-                {/* Rating */}
-                <div className="flex justify-center md:justify-start text-yellow-400 text-lg">
-                  ★★★★★
-                </div>
-
                 {/* Bio Info */}
                 <div className="mt-2 text-sm space-y-1">
                   <p>
@@ -106,8 +101,12 @@ export default function CelebPage() {
                 </div>
               </div>
 
-              <div className="flex-1 text-sm text-gray-300 leading-relaxed md:ml-6">
-                {celebData.bio}
+              <div className="flex-1 flex-col items-center text-sm text-gray-300 leading-relaxed md:ml-6">
+                <div className="text-center">{celebData.bio}</div>
+                {/* Rating */}
+                <div className="flex text-center justify-center text-yellow-400 text-lg">
+                  ★★★★★
+                </div>
               </div>
             </div>
           </div>
