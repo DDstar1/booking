@@ -224,7 +224,18 @@ export default function BookingForm() {
                 ))}
               </div>
             )}
-
+            {error && (
+              <motion.div
+                key={error}
+                initial={{ x: -10, opacity: 0 }}
+                animate={{ x: [0, -5, 5, -5, 5, 0], opacity: 1 }}
+                exit={{ x: 0, opacity: 0 }}
+                transition={{ duration: 0.5 }}
+                className="text-red-500 font-medium text-sm text-center mt-4 p-3 bg-red-900/20 rounded-lg border border-red-500/30"
+              >
+                {error}
+              </motion.div>
+            )}
             <div className="flex justify-between pt-4">
               {step > 0 && (
                 <button
@@ -288,19 +299,6 @@ export default function BookingForm() {
                 </button>
               )}
             </div>
-
-            {error && (
-              <motion.div
-                key={error}
-                initial={{ x: -10, opacity: 0 }}
-                animate={{ x: [0, -5, 5, -5, 5, 0], opacity: 1 }}
-                exit={{ x: 0, opacity: 0 }}
-                transition={{ duration: 0.5 }}
-                className="text-red-500 font-medium text-sm text-center mt-4 p-3 bg-red-900/20 rounded-lg border border-red-500/30"
-              >
-                {error}
-              </motion.div>
-            )}
           </form>
         )}
       </div>
