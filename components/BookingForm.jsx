@@ -173,15 +173,39 @@ export default function BookingForm() {
 
                 {["budget", "eventType", "location"].map((field) => (
                   <div key={field} className="relative">
-                    <input
-                      type="text"
-                      name={field}
-                      value={formData[field]}
-                      onChange={handleChange}
-                      placeholder=" "
-                      className="floating-input w-full rounded-xl border border-gray-700 bg-gray-900 text-white px-4 py-3 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                    <label className="floating-label capitalize">{field}</label>
+                    {field === "budget" ? (
+                      <>
+                        <select
+                          name="budget"
+                          value={formData.budget}
+                          onChange={handleChange}
+                          className="floating-input w-full appearance-none rounded-xl border border-gray-700 bg-gray-900 text-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                          <option value="" disabled hidden>
+                            Select your budget
+                          </option>
+                          <option value="5k – 10k">5k – 10k</option>
+                          <option value="10k – 50k">10k – 50k</option>
+                          <option value="50k – 250k">50k – 250k</option>
+                          <option value="250k+">250k+</option>
+                        </select>
+                        <label className="floating-label">Budget</label>
+                      </>
+                    ) : (
+                      <>
+                        <input
+                          type="text"
+                          name={field}
+                          value={formData[field]}
+                          onChange={handleChange}
+                          placeholder=" "
+                          className="floating-input w-full rounded-xl border border-gray-700 bg-gray-900 text-white px-4 py-3 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                        <label className="floating-label capitalize">
+                          {field}
+                        </label>
+                      </>
+                    )}
                   </div>
                 ))}
 
