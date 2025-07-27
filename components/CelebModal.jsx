@@ -5,6 +5,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import AnimatedLinkButton from "./AnimatedLinkButton";
+import Image from "next/image";
 
 const CelebModalWrapper = ({ celeb_data, origin, closeModal }) => {
   const router = useRouter();
@@ -90,10 +91,12 @@ const CelebModalWrapper = ({ celeb_data, origin, closeModal }) => {
 
           {/* Header Section */}
           <div className="relative h-[45%]">
-            <img
+            <Image
               src={celeb_data.image}
               alt={celeb_data.name}
-              className="w-full object-cover h-full object-top"
+              fill
+              className="object-cover object-top"
+              sizes="100vw"
             />
             <div className="absolute w-full p-3 flex bg-gradient-to-b from-black/80 to-transparent items-center justify-between top-0 text-white">
               <div className="flex items-center space-x-3">

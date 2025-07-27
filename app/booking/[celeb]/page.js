@@ -4,6 +4,7 @@ import { use } from "react";
 import celebrities from "@/utils/celebrities";
 import BookingForm from "@/components/BookingForm";
 import Bio from "@/components/Bio";
+import Image from "next/image";
 
 import { useEffect, useState } from "react";
 import { notFound, useParams } from "next/navigation";
@@ -62,10 +63,12 @@ export default function CelebPage() {
           <div className="flex flex-col md:flex-row md:items-center gap-6">
             {/* Image */}
             <div className="flex justify-center md:justify-start">
-              <img
+              <Image
                 src={celebData.image}
                 alt={celebData.name}
-                className="w-40 h-40 rounded-full border-4 border-blue-600 shadow-md object-cover"
+                width={160}
+                height={160}
+                className="rounded-full border-4 border-blue-600 shadow-md object-cover w-40 h-40"
               />
             </div>
 
