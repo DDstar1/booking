@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import AnimatedLinkButton from "./AnimatedLinkButton";
 
 const CelebModalWrapper = ({ celeb_data, origin, closeModal }) => {
   const router = useRouter();
@@ -150,13 +151,11 @@ const CelebModalWrapper = ({ celeb_data, origin, closeModal }) => {
               {celeb_data.bio}
             </p>
 
-            <div className="flex justify-between gap-4">
-              <Link href={`/booking/${celeb_data.id}`} className="flex-1">
-                <button className="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded-xl font-semibold text-sm">
-                  Request Booking ↗
-                </button>
-              </Link>
-            </div>
+            <AnimatedLinkButton
+              className="w-full !rounded-4xl"
+              href={`/booking/${celeb_data.id}`}
+              text={"Request Booking ↗"}
+            />
           </div>
         </div>
       </motion.div>
