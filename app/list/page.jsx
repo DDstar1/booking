@@ -1,10 +1,10 @@
 "use client";
 import { useState, useEffect, useMemo } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { useSearchParams } from "next/navigation";
 import CelebCard from "@/components/CelebCard";
 import { Pagination } from "@heroui/react";
 import AnimatedPagination from "@/components/AnimatedPagination";
-import { AnimatePresence } from "framer-motion";
 import CelebModalWrapper from "@/components/CelebModal";
 
 const collapseVariants = {
@@ -30,6 +30,8 @@ const CelebritiesPage = () => {
   const [origin, setOrigin] = useState(null);
   const itemsPerPage = 8;
 
+  const searchParams = useSearchParams();
+
   useEffect(() => {
     const fetchCelebrities = async () => {
       try {
@@ -46,6 +48,14 @@ const CelebritiesPage = () => {
 
     fetchCelebrities();
   }, []);
+
+  // Preselect tag from query param
+  useEffect(() => {
+    const tagFromURL = searchParams.get("tag");
+    if (tagFromURL) {
+      setActiveTags([tagFromURL]);
+    }
+  }, [searchParams]);
 
   const handleClick = (celeb, e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -70,6 +80,13 @@ const CelebritiesPage = () => {
     });
     return [...tags];
   }, [celebrities]);
+
+  const sortedTags = useMemo(() => {
+    return [
+      ...activeTags,
+      ...allTags.filter((tag) => !activeTags.includes(tag)),
+    ];
+  }, [allTags, activeTags]);
 
   const filteredCelebs = celebrities.filter((celeb) => {
     const matchesSearch = celeb.name
@@ -118,7 +135,7 @@ const CelebritiesPage = () => {
 
   return (
     <>
-      <div className=" bg-[#0f0f0f] text-white  mx-auto  px-4 pt-20 pb-5">
+      <div className="bg-[#0f0f0f] text-white mx-auto px-4 pt-20 pb-5">
         {/* Search Input */}
         <input
           type="text"
@@ -130,8 +147,8 @@ const CelebritiesPage = () => {
           placeholder="Search celebrities..."
           className="w-full p-2 mb-4 rounded border border-gray-700 bg-[#1a1a1a] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        <div className="mb-5 ">
-          {/* Toggle Filters Button */}
+
+        <div className="mb-5">
           <div className="flex justify-between items-center mb-2">
             <h3 className="text-lg font-semibold">Filter by Tags</h3>
             <button
@@ -142,18 +159,17 @@ const CelebritiesPage = () => {
             </button>
           </div>
 
-          {/* Animated Filter Tags */}
           <motion.div
             variants={collapseVariants}
             animate={showFilters ? "expanded" : "collapsed"}
             initial={false}
-            className={`overflow-hidden mb-6  ${
+            className={`overflow-hidden mb-6 ${
               showFilters
                 ? "flex flex-wrap gap-2"
                 : "flex gap-2 overflow-x-auto -mx-4"
             }`}
           >
-            {allTags.map((tag) => (
+            {sortedTags.map((tag) => (
               <button
                 key={tag}
                 onClick={() => handleTagClick(tag)}
@@ -168,8 +184,9 @@ const CelebritiesPage = () => {
             ))}
           </motion.div>
         </div>
-        {/* Celebrity Cards Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4  ">
+
+        {/* Celeb Cards */}
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {paginatedCelebs.map((celeb) => (
             <CelebCard
               onClick={(e) => handleClick(celeb, e)}
@@ -181,7 +198,7 @@ const CelebritiesPage = () => {
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="flex justify-center ">
+          <div className="flex justify-center">
             <AnimatedPagination
               total={totalPages}
               onChange={handlePageChange}

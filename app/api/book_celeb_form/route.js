@@ -47,7 +47,7 @@ export async function POST(req) {
       reply_to: email,
       subject: `New Booking Inquiry for ${eventType}`,
       html: `
-        <div style="background-color:#000000; color:#ffffff; font-family:Arial, sans-serif; padding:24px;">
+        <div style="color:#ffffff; font-family:Arial, sans-serif; padding:24px;">
           <div style="max-width:600px; margin:0 auto; border:1px solid #374151; border-radius:8px; background-color:#111111; padding:32px;">
             <h2 style="color:#2563EB;">🎤 New Booking Inquiry</h2>
             
@@ -83,7 +83,7 @@ export async function POST(req) {
       to: email,
       subject: "We received your booking request!",
       html: `
-        <div style="background-color:#000000; color:#ffffff; font-family:Arial, sans-serif; padding:24px;">
+        <div style=" color:#ffffff; font-family:Arial, sans-serif; padding:24px;">
           <div style="max-width:600px; margin:0 auto; border:1px solid #374151; border-radius:8px; background-color:#111111; padding:32px;">
             <h2 style="color:#2563EB;">Hey ${fullName},</h2>
             <p style="color:#D1D5DB;">

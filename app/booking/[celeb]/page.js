@@ -79,7 +79,7 @@ export default function CelebPage() {
                       ★★★★★
                     </div>
                   </h1>
-                  <div>
+                  <div className="min-w-fit">
                     <div className="mt-2 text-sm space-y-1">
                       <p className="text-sm text-gray-400">{celebData.role}</p>
                       <p>

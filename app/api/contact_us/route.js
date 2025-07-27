@@ -22,7 +22,7 @@ export async function POST(req) {
       reply_to: email,
       subject: `New Contact Form Submission - ${eventType}`,
       html: `
-  <div style="background-color:#000000; color:#ffffff; font-family:Arial, sans-serif; padding:24px;">
+  <div style=" color:#ffffff; font-family:Arial, sans-serif; padding:24px;">
     <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:600px; margin:0 auto; background-color:#111111; border:1px solid #374151; border-radius:8px;">
       <tr>
         <td style="padding:32px;">
@@ -60,7 +60,7 @@ export async function POST(req) {
       to: email,
       subject: "We received your booking request!",
       html: `
-  <div style="background-color:#000000; color:#ffffff; font-family:Arial, sans-serif; padding:24px;">
+  <div style=" color:#ffffff; font-family:Arial, sans-serif; padding:24px;">
     <div style="max-width:600px; margin:0 auto; border:1px solid #374151; border-radius:8px; padding:32px; background-color:#111111;">
       <h2 style="font-size:24px; color:#2563EB; margin-bottom:16px;">Hey ${name},</h2>
 
