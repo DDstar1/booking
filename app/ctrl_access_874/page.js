@@ -14,10 +14,10 @@ import AddCelebritySection from "@/components/admin/AddCelebritySection";
 import ManageCelebritiesSection from "@/components/admin/ManageCelebritiesSection";
 import EditCelebModal from "@/components/admin/EditCelebModal";
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_ANON_KEY
-);
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export default function AdminPanel() {
   const [loading, setLoading] = useState(true);
