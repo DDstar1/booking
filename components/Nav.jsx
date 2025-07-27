@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Star, Menu, X } from "lucide-react";
 import Link from "next/link";
+import AnimatedLinkButton from "./AnimatedLinkButton";
 
 const navVariants = {
   hidden: { y: -80, opacity: 0 },
@@ -20,6 +22,7 @@ const navVariants = {
 };
 
 const Navigation = () => {
+  const pathname = usePathname();
   const [showNav, setShowNav] = useState(true);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -64,24 +67,30 @@ const Navigation = () => {
               {/* Desktop Nav */}
               <div className="hidden md:flex space-x-8">
                 {links.map((link) => (
-                  <a
+                  <Link
                     key={link.href}
                     href={link.href}
-                    className="text-gray-300 hover:text-white transition-colors"
+                    className={`transition-colors ${
+                      pathname === link.href
+                        ? "text-blue-400 font-semibold"
+                        : "text-gray-300 hover:text-white"
+                    }`}
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 ))}
               </div>
 
               {/* Desktop Button */}
-              <div className="hidden md:flex items-center space-x-4">
-                <Link href="/list">
-                  <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105">
-                    Book Now
-                  </button>
-                </Link>
-              </div>
+              {pathname !== "/list" && (
+                <div className="hidden md:flex items-center space-x-4">
+                  <AnimatedLinkButton
+                    href="/list"
+                    className="!rounded-full w-full"
+                    text={"Book Now"}
+                  />
+                </div>
+              )}
 
               {/* Mobile Menu Button */}
               <div className="md:hidden">
@@ -107,18 +116,28 @@ const Navigation = () => {
                   className="md:hidden bg-black border-t border-gray-700 mt-2 rounded-b-lg px-4 pb-4"
                 >
                   {links.map((link) => (
-                    <a
+                    <Link
                       key={link.href}
                       href={link.href}
-                      className="block text-gray-300 py-2 hover:text-white"
+                      className={`block py-2 transition-colors ${
+                        pathname === link.href
+                          ? "text-blue-400 font-semibold"
+                          : "text-gray-300 hover:text-white"
+                      }`}
                       onClick={() => setIsMobileOpen(false)}
                     >
                       {link.label}
-                    </a>
+                    </Link>
                   ))}
-                  <button className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full font-semibold">
-                    Book Now
-                  </button>
+
+                  {/* Mobile Button (only if not on /list) */}
+                  {pathname !== "/list" && (
+                    <AnimatedLinkButton
+                      href="/list"
+                      className="!rounded-full w-full mt-4"
+                      text={"Book Now"}
+                    />
+                  )}
                 </motion.div>
               )}
             </AnimatePresence>
