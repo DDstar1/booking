@@ -116,11 +116,12 @@ export default function BookingForm() {
             top: 50%;
             transform: translateY(-50%);
             background: #111827;
-            padding: 0 4px;
+            padding: 0 10px;
             color: #9ca3af;
             pointer-events: none;
             transition: all 0.2s ease-in-out;
             font-size: 14px;
+            border-radius: 60px;
           }
           .floating-input:focus + .floating-label,
           .floating-input:not(:placeholder-shown) + .floating-label {
@@ -179,7 +180,7 @@ export default function BookingForm() {
                           name="budget"
                           value={formData.budget}
                           onChange={handleChange}
-                          className="floating-input w-full appearance-none rounded-xl border border-gray-700 bg-gray-900 text-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="floating-input w-full rounded-xl border pl-6 border-gray-700 bg-gray-900 text-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
                           <option value="" disabled hidden>
                             Select your budget
