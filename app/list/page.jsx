@@ -28,7 +28,7 @@ const CelebritiesPage = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [selectedCeleb, setSelectedCeleb] = useState(null);
   const [origin, setOrigin] = useState(null);
-  const itemsPerPage = 6;
+  const itemsPerPage = 8;
 
   useEffect(() => {
     const fetchCelebrities = async () => {
@@ -118,7 +118,7 @@ const CelebritiesPage = () => {
 
   return (
     <>
-      <div className=" bg-[#0f0f0f] text-white  mx-auto  px-4 pt-20">
+      <div className=" bg-[#0f0f0f] text-white  mx-auto  px-4 pt-20 pb-5">
         {/* Search Input */}
         <input
           type="text"

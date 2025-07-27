@@ -148,7 +148,7 @@ export default function EditCelebModal({
           </div>
 
           {/* Form */}
-          <div className="p-4 text-white space-y-4 max-h-[80vh] overflow-y-auto">
+          <div className="p-4 text-white space-y-4 max-h-[80dvh] overflow-y-auto">
             {/* Image Upload */}
             <div>
               <label className="block text-sm font-semibold">

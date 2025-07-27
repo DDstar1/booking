@@ -3,6 +3,7 @@
 import { use } from "react";
 import celebrities from "@/utils/celebrities";
 import BookingForm from "@/components/BookingForm";
+import Bio from "@/components/Bio";
 
 import { useEffect, useState } from "react";
 import { notFound, useParams } from "next/navigation";
@@ -71,41 +72,46 @@ export default function CelebPage() {
             <div className="flex justify-evenly items-center w-full">
               {/* Info & Bio */}
               <div className="flex-1 text-center md:text-left space-y-2">
-                <h1 className="text-2xl font-bold text-white">
-                  {celebData.name}
-                </h1>
-                <p className="text-sm text-gray-400">{celebData.role}</p>
-
-                {/* Bio Info */}
-                <div className="mt-2 text-sm space-y-1">
-                  <p>
-                    <span className="font-semibold text-gray-400">Age:</span>{" "}
-                    <span className="text-gray-300">
-                      {celebData.age || "N/A"}
-                    </span>
-                  </p>
-                  <p>
-                    <span className="font-semibold text-gray-400">Gender:</span>{" "}
-                    <span className="text-gray-300">
-                      {celebData.gender || "N/A"}
-                    </span>
-                  </p>
-                  <p>
-                    <span className="font-semibold text-gray-400">
-                      Country:
-                    </span>{" "}
-                    <span className="text-gray-300">
-                      {celebData.country || "N/A"}
-                    </span>
-                  </p>
+                <div className="flex justify-evenly items-center">
+                  <h1 className="text-2xl font-bold text-white">
+                    {celebData.name}
+                    <div className="flex text-center justify-center text-yellow-400 text-lg">
+                      ★★★★★
+                    </div>
+                  </h1>
+                  <div>
+                    <div className="mt-2 text-sm space-y-1">
+                      <p className="text-sm text-gray-400">{celebData.role}</p>
+                      <p>
+                        <span className="font-semibold text-gray-400">
+                          Age:
+                        </span>{" "}
+                        <span className="text-gray-300">
+                          {celebData.age || "N/A"}
+                        </span>
+                      </p>
+                      <p>
+                        <span className="font-semibold text-gray-400">
+                          Gender:
+                        </span>{" "}
+                        <span className="text-gray-300">
+                          {celebData.gender || "N/A"}
+                        </span>
+                      </p>
+                      <p>
+                        <span className="font-semibold text-gray-400">
+                          Country:
+                        </span>{" "}
+                        <span className="text-gray-300">
+                          {celebData.country || "N/A"}
+                        </span>
+                      </p>
+                    </div>
+                    {/* Bio Info */}
+                  </div>
                 </div>
-              </div>
-
-              <div className="flex-1 flex-col items-center text-sm text-gray-300 leading-relaxed md:ml-6">
-                <div className="text-center">{celebData.bio}</div>
-                {/* Rating */}
-                <div className="flex text-center justify-center text-yellow-400 text-lg">
-                  ★★★★★
+                <div className="flex-1 text-center flex-col items-center text-sm text-gray-300 leading-relaxed md:ml-6">
+                  <Bio bio={celebData.bio} />
                 </div>
               </div>
             </div>
