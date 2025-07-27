@@ -19,7 +19,11 @@ export default function BookingForm() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // 👈 Prevent native reload
+
+    if (isSubmitting) return;
+
     setIsSubmitting(true);
     try {
       const response = await fetch("/api/contact_us", {
@@ -56,7 +60,7 @@ export default function BookingForm() {
           </p>
         </div>
       ) : (
-        <div className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <label className="block text-gray-300 mb-2">Full Name</label>
@@ -121,7 +125,7 @@ export default function BookingForm() {
               name="message"
               value={formData.message}
               onChange={handleInputChange}
-              rows="5"
+              rows={5}
               className="w-full bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-blue-400 focus:outline-none resize-none"
               placeholder="Tell us about your event..."
               required
@@ -129,7 +133,7 @@ export default function BookingForm() {
           </div>
 
           <button
-            onClick={handleSubmit}
+            type="submit"
             className={`w-full bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 transform flex items-center justify-center ${
               isSubmitting ? "opacity-70 cursor-not-allowed" : "hover:scale-105"
             }`}
@@ -165,7 +169,7 @@ export default function BookingForm() {
               </>
             )}
           </button>
-        </div>
+        </form>
       )}
     </div>
   );

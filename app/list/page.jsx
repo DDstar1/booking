@@ -118,7 +118,7 @@ const CelebritiesPage = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-[#0f0f0f] text-white  mx-auto  px-4 pt-20">
+      <div className=" bg-[#0f0f0f] text-white  mx-auto  px-4 pt-20">
         {/* Search Input */}
         <input
           type="text"
@@ -169,7 +169,7 @@ const CelebritiesPage = () => {
           </motion.div>
         </div>
         {/* Celebrity Cards Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 overflow-y-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 min-h-[90vh] ">
           {paginatedCelebs.map((celeb) => (
             <CelebCard
               onClick={(e) => handleClick(celeb, e)}
