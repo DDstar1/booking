@@ -17,10 +17,10 @@ const AnimatedPagination = ({ total, onChange }) => {
   return (
     <div className="flex flex-col items-center gap-4  ">
       {/* Pagination buttons */}
-      <div className="flex gap-2  bg-white p-4 rounded-lg shadow-md">
+      <div className="flex gap-2  p-4 rounded-lg shadow-md">
         <button
           onClick={() => handlePageChange(currentPage - 1)}
-          className="px-3 py-1 rounded border border-gray-300 text-sm hover:bg-gray-100 disabled:opacity-50"
+          className="px-3 py-1 rounded border border-gray-300 text-sm hover:bg-gray-100 text-white disabled:opacity-50"
           disabled={currentPage === 1}
         >
           &lt;
@@ -33,7 +33,7 @@ const AnimatedPagination = ({ total, onChange }) => {
             className={`px-3 py-1 rounded text-sm ${
               currentPage === num
                 ? "bg-blue-600 text-white"
-                : "border border-gray-300 hover:bg-gray-100"
+                : "border border-gray-300 hover:bg-gray-100 text-white"
             }`}
           >
             {num}
@@ -42,7 +42,7 @@ const AnimatedPagination = ({ total, onChange }) => {
 
         <button
           onClick={() => handlePageChange(currentPage + 1)}
-          className="px-3 py-1 rounded border border-gray-300 text-sm hover:bg-gray-100 disabled:opacity-50"
+          className="px-3 py-1 rounded border border-gray-300 text-sm hover:bg-gray-100 text-white disabled:opacity-50"
           disabled={currentPage === total}
         >
           &gt;

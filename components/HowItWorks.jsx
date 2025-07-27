@@ -30,7 +30,7 @@ const steps = [
 export default function HowItWorksSection() {
   return (
     <section className="relative md:min-h-screen py-32 bg-black/40 overflow-hidden z-10">
-      <BackgroundBeams className="pointer-events-none z-0" />
+      <BackgroundBeams className="pointer-events-none " />
 
       <div className="relative max-w-7xl mx-auto px-4">
         <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-8 font-display tracking-tight">

@@ -78,7 +78,7 @@ const CelebModalWrapper = ({ celeb_data, origin, closeModal }) => {
         }}
       >
         {/* Modal Content */}
-        <div className="relative w-full max-[90vh] bg-black/60 rounded-2xl md:max-w-[400px] mx-auto overflow-hidden shadow-xl backdrop-blur-md">
+        <div className="relative w-full h-[100vh] bg-black/60 rounded-2xl md:max-w-[400px] mx-auto overflow-hidden shadow-xl backdrop-blur-md">
           {/* Close Button */}
           <button
             onClick={closeModal}
@@ -88,11 +88,11 @@ const CelebModalWrapper = ({ celeb_data, origin, closeModal }) => {
           </button>
 
           {/* Header Section */}
-          <div className="relative">
+          <div className="relative h-[45%]">
             <img
               src={celeb_data.image}
               alt={celeb_data.name}
-              className="w-full sm:h-72 object-cover"
+              className="w-full object-cover h-full object-top"
             />
             <div className="absolute w-full p-3 flex bg-gradient-to-b from-black/80 to-transparent items-center justify-between top-0 text-white">
               <div className="flex items-center space-x-3">
@@ -112,8 +112,8 @@ const CelebModalWrapper = ({ celeb_data, origin, closeModal }) => {
           </div>
 
           {/* ✅ Main Body Content */}
-          <div className="p-4 text-white space-y-4">
-            <div className="bg-gray-800/50 rounded-xl p-3 text-sm text-gray-300">
+          <div className="p-4 flex flex-col relative h-[55%] text-white space-y-4">
+            <div className="flex-1 bg-gray-800/50 rounded-xl p-3 text-sm text-gray-300">
               <div className="flex justify-between items-center gap-4">
                 <div className="flex flex-col gap-3 text-sm text-gray-300">
                   <div className="border-b border-gray-700 pb-2">
@@ -146,7 +146,9 @@ const CelebModalWrapper = ({ celeb_data, origin, closeModal }) => {
               </div>
             </div>
 
-            <p className="text-sm text-gray-300">{celeb_data.bio}</p>
+            <p className="text-sm h-3/4 overflow-scroll text-gray-300">
+              {celeb_data.bio}
+            </p>
 
             <div className="flex justify-between gap-4">
               <Link href={`/booking/${celeb_data.id}`} className="flex-1">

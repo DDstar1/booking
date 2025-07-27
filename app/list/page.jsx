@@ -118,7 +118,7 @@ const CelebritiesPage = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-[#0f0f0f] text-white  mx-auto  px-4 py-20">
+      <div className="min-h-screen bg-[#0f0f0f] text-white  mx-auto  px-4 pt-20">
         {/* Search Input */}
         <input
           type="text"
@@ -130,7 +130,7 @@ const CelebritiesPage = () => {
           placeholder="Search celebrities..."
           className="w-full p-2 mb-4 rounded border border-gray-700 bg-[#1a1a1a] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        <div className="mb-5">
+        <div className="mb-5 ">
           {/* Toggle Filters Button */}
           <div className="flex justify-between items-center mb-2">
             <h3 className="text-lg font-semibold">Filter by Tags</h3>
@@ -147,10 +147,10 @@ const CelebritiesPage = () => {
             variants={collapseVariants}
             animate={showFilters ? "expanded" : "collapsed"}
             initial={false}
-            className={`overflow-hidden mb-6 ${
+            className={`overflow-hidden mb-6  ${
               showFilters
                 ? "flex flex-wrap gap-2"
-                : "flex gap-2 overflow-x-auto"
+                : "flex gap-2 overflow-x-auto -mx-4"
             }`}
           >
             {allTags.map((tag) => (
@@ -181,7 +181,7 @@ const CelebritiesPage = () => {
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="flex justify-center sticky bottom-1">
+          <div className="flex justify-center ">
             <AnimatedPagination
               total={totalPages}
               onChange={handlePageChange}

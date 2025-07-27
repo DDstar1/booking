@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Calendar, Users, Award, ArrowRight, Play } from "lucide-react";
 import { BackgroundBeams } from "@/components/ui/BackgroundBeam";
 import Link from "next/link";
+
 import { motion, AnimatePresence } from "framer-motion";
 import HowItWorks from "@/components/HowItWorks";
 
@@ -228,15 +229,25 @@ export default function CelebrityBookingLanding() {
             Join thousands of clients who've made their moments iconic with our
             talent.
           </p>
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/list">
-              <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-semibold text-lg transition-transform transform hover:scale-105 font-sans tracking-wide">
+            <motion.div whileTap={{ scale: 0.95 }}>
+              <Link
+                href="/list"
+                className="bg-blue-600 w-full hover:bg-blue-700 text-white px-8 py-4 rounded-full font-semibold text-lg transition-transform transform hover:scale-105 font-sans tracking-wide inline-block"
+              >
                 Start Booking Now
-              </button>
-            </Link>
-            <button className="border-2 border-gray-700 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-800/50 font-sans tracking-wide">
-              Speak to Our Team
-            </button>
+              </Link>
+            </motion.div>
+
+            <motion.div whileTap={{ scale: 0.95 }}>
+              <Link
+                href="/contact_us"
+                className="border-2 w-full border-gray-700 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-800/50 font-sans tracking-wide inline-block"
+              >
+                Speak to Our Team
+              </Link>
+            </motion.div>
           </div>
         </div>
       </section>
