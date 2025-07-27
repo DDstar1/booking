@@ -236,7 +236,7 @@ export default function BookingForm() {
                 {error}
               </motion.div>
             )}
-            <div className="flex justify-between pt-4">
+            <div className="flex justify-between gap-2 pt-4">
               {step > 0 && (
                 <button
                   type="button"
@@ -293,7 +293,7 @@ export default function BookingForm() {
                     </>
                   ) : (
                     <>
-                      Submit Booking Request <Send className="ml-2 h-5 w-5" />
+                      Submit <Send className="ml-2 h-5 w-5" />
                     </>
                   )}
                 </button>
