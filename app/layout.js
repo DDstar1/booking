@@ -9,6 +9,7 @@ import {
 import "./globals.css";
 import Navigation from "@/components/Nav";
 import { Analytics } from "@vercel/analytics/next";
+import { Suspense } from "react";
 
 import Footer from "@/components/Footer";
 
@@ -56,9 +57,13 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${playfairDisplay.variable} ${poppins.variable} ${montserrat.variable} antialiased`}
       >
-        <Navigation />
-        {children}
-        <Footer />
+        <Suspense
+          fallback={<div className="text-white p-10">Loading page...</div>}
+        >
+          <Navigation />
+          {children}
+          <Footer />
+        </Suspense>
         <Analytics mode="production" />;
       </body>
     </html>
