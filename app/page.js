@@ -15,7 +15,30 @@ import ShinyUnderline from "@/components/ShinyUnderline";
 import AnimatedLinkButton from "@/components/AnimatedLinkButton";
 export default function CelebrityBookingLanding() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const container = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: 0.3, // ⏱ delay between children
+      },
+    },
+  };
 
+  const item = {
+    hidden: { opacity: 0, y: -20 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        bounce: 0.2, // Reduced bounce for smoother motion
+        duration: 1.2, // Shorter duration
+        damping: 25, // Higher damping for less oscillation
+        stiffness: 60, // Higher stiffness for quicker response
+        mass: 0.8, // Slightly higher mass for natural feel
+      },
+    },
+  };
   const steps = [
     {
       title: "1. Browse & Select",
@@ -80,28 +103,36 @@ export default function CelebrityBookingLanding() {
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black"></div>
-        <div className="relative max-w-7xl mx-auto px-4 text-center">
+
+        <motion.div
+          className="relative max-w-7xl mx-auto px-4 text-center h-full flex flex-col justify-between"
+          variants={container}
+          initial="hidden"
+          animate="show"
+        >
+          {/* Heading */}
           <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            variants={item}
             className="text-6xl md:text-8xl font-black text-white mb-6 leading-tight tracking-tight font-display"
           >
             Book <span className="text-blue-400 font-extrabold">Celebrity</span>{" "}
             Talent
           </motion.h1>
+
+          {/* Subheading */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
+            variants={item}
             className="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto font-sans font-light leading-relaxed"
           >
             Secure iconic talent for unforgettable moments—corporate, personal,
             or once-in-a-lifetime events.
           </motion.p>
+
+          {/* Button */}
           <motion.div
-            whileHover={{ scale: 1.02 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
+            variants={item}
+            whileHover={{ scale: 1.05 }}
+            className="flex flex-col items-center sm:flex-row gap-4 justify-center mb-12"
           >
             <AnimatedLinkButton
               className="!rounded-full px-8 py-4 font-semibold text-lg transition-all transform flex items-center justify-center font-sans tracking-wide"
@@ -109,28 +140,29 @@ export default function CelebrityBookingLanding() {
               href={"/list"}
             />
           </motion.div>
+
+          {/* Stats */}
           <motion.div
+            variants={item}
             className="flex justify-center space-x-8 text-gray-400"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
           >
             {[
               { label: "Celebrities", value: "1000+" },
               { label: "Events Booked", value: "50K+" },
               { label: "Rating", value: "4.9★" },
             ].map((stat, idx) => (
-              <div key={idx} className="text-center">
+              <motion.div key={idx} variants={item} className="text-center">
                 <div className="text-3xl font-bold text-white font-display tracking-tight">
                   {stat.value}
                 </div>
                 <div className="text-sm font-sans font-medium tracking-wide uppercase">
                   {stat.label}
                 </div>
-              </div>
+              </motion.div>
             ))}
           </motion.div>
-        </div>
+        </motion.div>
+
         <img
           className="w-screen absolute h-auto bottom-full left-0 object-cover"
           src="/bubble-side-divider.svg"
