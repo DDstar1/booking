@@ -57,14 +57,12 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${playfairDisplay.variable} ${poppins.variable} ${montserrat.variable} antialiased`}
       >
-        <Suspense
-          fallback={<div className="text-white p-10">Loading page...</div>}
-        >
+        <Suspense fallback={<div className="text-white">Loading page...</div>}>
           <Navigation />
           {children}
           <Footer />
+          <Analytics mode="production" />;
         </Suspense>
-        <Analytics mode="production" />;
       </body>
     </html>
   );

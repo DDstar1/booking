@@ -44,54 +44,23 @@ export default function HowItWorksSection() {
           {steps.map((step, i) => (
             <div
               key={i}
-              className="text-center bg-gray-900/50 rounded-xl p-8 border border-gray-700 transition-transform duration-300 hover:scale-[1.03]"
+              className="text-center flex items-center justify-center gap-3 bg-gray-900/50 rounded-xl p-8 border border-gray-700 transition-transform duration-300 hover:scale-[1.03]"
             >
-              <div className="bg-blue-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 shadow-md">
+              <div className="bg-blue-600   min-w-16 h-16 rounded-full flex items-center justify-center mx-auto  shadow-md">
                 {step.icon}
               </div>
-              <h3 className="text-xl font-bold text-white mb-4 font-display tracking-tight">
-                {step.title}
-              </h3>
-              <p className="text-gray-300 font-sans leading-relaxed">
-                {step.description}
-              </p>
+              <div className="flex-1">
+                <h3 className="text-xl font-bold text-white mb-2 font-display tracking-tight">
+                  {step.title}
+                </h3>
+                <p className="text-gray-300 font-sans leading-relaxed">
+                  {step.description}
+                </p>
+              </div>
             </div>
           ))}
         </div>
       </div>
     </section>
-  );
-}
-
-function AnimatedStepCard({ step }) {
-  const controls = useAnimation();
-  const [ref, inView] = useInView({ threshold: 0.3 });
-
-  useEffect(() => {
-    if (inView) {
-      controls.start({ scale: 1, opacity: 1 });
-    } else {
-      controls.start({ scale: 0.92, opacity: 0.6 });
-    }
-  }, [inView]);
-
-  return (
-    <motion.div
-      ref={ref}
-      animate={controls}
-      initial={{ scale: 0.92, opacity: 0.6 }}
-      transition={{ duration: 0.4, ease: "easeOut" }}
-      className="text-center bg-gray-900/50 rounded-xl p-8 border border-gray-700 shadow-lg transition-transform"
-    >
-      <div className="bg-blue-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 shadow-md">
-        {step.icon}
-      </div>
-      <h3 className="text-xl font-bold text-white mb-4 font-display tracking-tight">
-        {step.title}
-      </h3>
-      <p className="text-gray-300 font-sans leading-relaxed">
-        {step.description}
-      </p>
-    </motion.div>
   );
 }
