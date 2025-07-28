@@ -191,10 +191,16 @@ export default function BookingForm({ celebName = "" }) {
                           <option value="" disabled hidden>
                             Select your budget
                           </option>
-                          <option value="5k – 10k">5k – 10k</option>
-                          <option value="10k – 50k">10k – 50k</option>
-                          <option value="50k – 250k">50k – 250k</option>
-                          <option value="250k+">250k+</option>
+                          <option value="$5,000 – $10,000">
+                            $5,000 – $10,000
+                          </option>
+                          <option value="$10,000 – $50,000">
+                            $10,000 – $50,000
+                          </option>
+                          <option value="$50,000 – $250,000">
+                            $50,000 – $250,000
+                          </option>
+                          <option value="$250,000+">$250,000+</option>
                         </select>
                         <label className="floating-label">Budget</label>
                       </>

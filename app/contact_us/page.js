@@ -120,7 +120,7 @@ export default function ContactPage() {
                       <h3 className="text-white font-bold text-lg mb-1">
                         Email
                       </h3>
-                      <p className="text-gray-300">bookings@starbook.com</p>
+                      <p className="text-gray-300">alex@elitestarbook.com</p>
                     </div>
                   </div>
                 </div>
