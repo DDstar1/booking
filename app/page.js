@@ -12,7 +12,7 @@ import { LampDemo } from "@/components/Featured_celebs";
 import { HoverBorderGradient } from "@/components/ui/HoverBorderGradient";
 import { SparklesCore } from "@/components/ui/SparklesCore";
 import ShinyUnderline from "@/components/ShinyUnderline";
-
+import AnimatedLinkButton from "@/components/AnimatedLinkButton";
 export default function CelebrityBookingLanding() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
 
@@ -103,13 +103,11 @@ export default function CelebrityBookingLanding() {
             whileHover={{ scale: 1.02 }}
             className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
           >
-            <Link href="/list">
-              <center>
-                <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all transform flex items-center justify-center font-sans tracking-wide">
-                  Browse Celebrities <ArrowRight className="ml-2 h-5 w-5" />
-                </button>
-              </center>
-            </Link>
+            <AnimatedLinkButton
+              className="!rounded-full px-8 py-4 font-semibold text-lg transition-all transform flex items-center justify-center font-sans tracking-wide"
+              text={"Browse Celebrities"}
+              href={"/list"}
+            />
           </motion.div>
           <motion.div
             className="flex justify-center space-x-8 text-gray-400"

@@ -17,10 +17,14 @@ const initialFormData = {
   email: "",
   address: "",
   airport: "",
+  celebName: "",
 };
 
-export default function BookingForm() {
-  const [formData, setFormData] = useState(initialFormData);
+export default function BookingForm({ celebName = "" }) {
+  const [formData, setFormData] = useState({
+    ...initialFormData,
+    celebName, // 👈 Set on mount
+  });
   const [step, setStep] = useState(0);
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -154,6 +158,8 @@ export default function BookingForm() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-6">
+            <input type="hidden" name="celebName" value={formData.celebName} />
+
             {step === 0 && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {["startDate", "endDate"].map((field) => (

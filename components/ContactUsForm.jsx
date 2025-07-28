@@ -111,9 +111,9 @@ export default function BookingForm() {
               >
                 <option value="">Select event type</option>
                 <option value="corporate">Corporate Event</option>
-                <option value="wedding">Wedding</option>
-                <option value="birthday">Birthday Party</option>
-                <option value="conference">Conference</option>
+                <option value="wedding">Concert</option>
+                <option value="birthday">Screen time</option>
+                <option value="conference">Meet and greet</option>
                 <option value="other">Other</option>
               </select>
             </div>
