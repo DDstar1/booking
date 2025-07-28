@@ -105,7 +105,7 @@ export default function CelebrityBookingLanding() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black"></div>
 
         <motion.div
-          className="relative max-w-7xl mx-auto px-4 text-center h-full flex flex-col justify-between"
+          className="relative max-w-7xl mx-auto px-4 text-center h-full flex flex-col justify-around"
           variants={container}
           initial="hidden"
           animate="show"
