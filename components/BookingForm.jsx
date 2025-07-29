@@ -215,21 +215,25 @@ export default function BookingForm({ celebName = "" }) {
 
             {step === 1 && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {requiredStep2Fields.map(({ name }) => (
-                  <div key={name} className="relative">
-                    <input
-                      type={name === "email" ? "email" : name === "phone" ? "tel" : "text"}
-                      name={name}
-                      value={formData[name]}
-                      onChange={handleChange}
-                      placeholder=" "
-                      className="floating-input w-full rounded-xl border border-gray-700 bg-gray-900 text-white px-4 py-3 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                    <label className="floating-label capitalize">
-                      {name.replace(/([a-z])([A-Z])/g, "$1 $2").replace(/^./, (c) => c.toUpperCase())}
-                    </label>
-                  </div>
-                ))}
+               {requiredStep2Fields.map(({ name, optional }) => (
+  <div key={name} className="relative">
+    <input
+      type={name === "email" ? "email" : name === "phone" ? "tel" : "text"}
+      name={name}
+      value={formData[name]}
+      onChange={handleChange}
+      placeholder=" "
+      className="floating-input w-full rounded-xl border border-gray-700 bg-gray-900 text-white px-4 py-3 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+    <label className="floating-label capitalize">
+      {name
+        .replace(/([a-z])([A-Z])/g, "$1 $2")
+        .replace(/^./, (c) => c.toUpperCase())}
+      {optional && " (optional)"}
+    </label>
+  </div>
+))}
+
               </div>
             )}
 
