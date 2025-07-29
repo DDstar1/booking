@@ -1,4 +1,3 @@
-// src/components/BookingForm.jsx
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle, Send } from "lucide-react";
@@ -23,7 +22,7 @@ const initialFormData = {
 export default function BookingForm({ celebName = "" }) {
   const [formData, setFormData] = useState({
     ...initialFormData,
-    celebName, // 👈 Set on mount
+    celebName,
   });
   const [step, setStep] = useState(0);
   const [error, setError] = useState("");
@@ -36,20 +35,14 @@ export default function BookingForm({ celebName = "" }) {
 
   const showError = (msg) => {
     setError(msg);
+    window.scrollTo({ top: 0, behavior: "smooth" });
     setTimeout(() => setError(""), 5000);
   };
 
   const handleNext = () => {
     const { startDate, endDate, budget, eventType, location, description } =
       formData;
-    if (
-      !startDate ||
-      !endDate ||
-      !budget ||
-      !eventType ||
-      !location ||
-      !description
-    ) {
+    if (!startDate || !endDate || !budget || !eventType || !location || !description) {
       showError("Please fill in all the required fields before continuing.");
       return;
     }
@@ -60,15 +53,9 @@ export default function BookingForm({ celebName = "" }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { fullName, jobTitle, organization, phone, email, address, airport } =
-      formData;
-    if (
-      !fullName ||
-      !phone ||
-      !email ||
-      !address ||
-      !airport
-    ) {
+    const { fullName, phone, email, address, airport } = formData;
+
+    if (!fullName || !phone || !email || !address || !airport || !formData.celebName) {
       showError("Please fill in all the required fields before submitting.");
       return;
     }
@@ -95,27 +82,22 @@ export default function BookingForm({ celebName = "" }) {
   };
 
   const requiredStep2Fields = [
-  "fullName",
-  "phone",
-  "email",
-  "address",
-  "airport",
-  "jobTitle (optional)",
-  "organization (optional)",
-];
+    { name: "fullName", optional: false },
+    { name: "phone", optional: false },
+    { name: "email", optional: false },
+    { name: "address", optional: false },
+    { name: "airport", optional: false },
+    { name: "jobTitle", optional: true },
+    { name: "organization", optional: true },
+  ];
 
-const filteredList = requiredStep2Fields.filter(
-  (field) => !field.includes("(optional)")
-);
-
-const isSubmitDisabled = filteredList.some(
-  (field) => !formData[field]?.trim()
-);
+  const isSubmitDisabled = requiredStep2Fields
+    .filter((f) => !f.optional)
+    .some((f) => !formData[f.name]?.trim());
 
   return (
-    <div className=" p-6">
+    <div className="p-6">
       <div className="max-w-4xl mx-auto">
-        {/* Floating label styles */}
         <style>{`
           .floating-label {
             position: absolute;
@@ -155,9 +137,7 @@ const isSubmitDisabled = filteredList.some(
             <h3 className="text-2xl font-bold text-white mb-2">
               Booking Request Sent!
             </h3>
-            <p className="text-gray-300">
-              We'll get back to you within 24 hours
-            </p>
+            <p className="text-gray-300">We'll get back to you within 24 hours</p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -194,15 +174,9 @@ const isSubmitDisabled = filteredList.some(
                           <option value="" disabled hidden>
                             Select your budget
                           </option>
-                          <option value="$5,000 – $10,000">
-                            $5,000 – $10,000
-                          </option>
-                          <option value="$10,000 – $50,000">
-                            $10,000 – $50,000
-                          </option>
-                          <option value="$50,000 – $250,000">
-                            $50,000 – $250,000
-                          </option>
+                          <option value="$5,000 – $10,000">$5,000 – $10,000</option>
+                          <option value="$10,000 – $50,000">$10,000 – $50,000</option>
+                          <option value="$50,000 – $250,000">$50,000 – $250,000</option>
                           <option value="$250,000+">$250,000+</option>
                         </select>
                         <label className="floating-label">Budget</label>
@@ -218,7 +192,7 @@ const isSubmitDisabled = filteredList.some(
                           className="floating-input w-full rounded-xl border border-gray-700 bg-gray-900 text-white px-4 py-3 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                         <label className="floating-label capitalize">
-                          {field}
+                          {field.charAt(0).toUpperCase() + field.slice(1)}
                         </label>
                       </>
                     )}
@@ -241,41 +215,36 @@ const isSubmitDisabled = filteredList.some(
 
             {step === 1 && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {requiredStep2Fields.map((field) => (
-                  <div key={field} className="relative">
+                {requiredStep2Fields.map(({ name }) => (
+                  <div key={name} className="relative">
                     <input
-                      type={
-                        field === "email"
-                          ? "email"
-                          : field === "phone"
-                            ? "tel"
-                            : "text"
-                      }
-                      name={field}
-                      value={formData[field]}
+                      type={name === "email" ? "email" : name === "phone" ? "tel" : "text"}
+                      name={name}
+                      value={formData[name]}
                       onChange={handleChange}
                       placeholder=" "
                       className="floating-input w-full rounded-xl border border-gray-700 bg-gray-900 text-white px-4 py-3 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <label className="floating-label capitalize">
-                      {field.replace(/([A-Z])/g, " $1")}
+                      {name.replace(/([a-z])([A-Z])/g, "$1 $2").replace(/^./, (c) => c.toUpperCase())}
                     </label>
                   </div>
                 ))}
               </div>
             )}
+
             {error && (
               <motion.div
                 key={error}
                 initial={{ x: -10, opacity: 0 }}
                 animate={{ x: [0, -5, 5, -5, 5, 0], opacity: 1 }}
-                exit={{ x: 0, opacity: 0 }}
                 transition={{ duration: 0.5 }}
                 className="text-red-500 font-medium text-sm text-center mt-4 p-3 bg-red-900/20 rounded-lg border border-red-500/30"
               >
                 {error}
               </motion.div>
             )}
+
             <div className="flex justify-between gap-2 pt-4">
               {step > 0 && (
                 <button
