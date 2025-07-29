@@ -97,19 +97,7 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                <div className="bg-gray-800/30 rounded-xl p-6 border border-gray-700">
-                  <div className="flex items-start space-x-4">
-                    <div className="bg-blue-600 p-3 rounded-full">
-                      <Phone className="h-6 w-6 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="text-white font-bold text-lg mb-1">
-                        Phone
-                      </h3>
-                      <p className="text-gray-300">+1 (555) 123-STAR</p>
-                    </div>
-                  </div>
-                </div>
+                
 
                 <div className="bg-gray-800/30 rounded-xl p-6 border border-gray-700">
                   <div className="flex items-start space-x-4">
