@@ -89,7 +89,7 @@ export default function ContactPage() {
                         Address
                       </h3>
                       <p className="text-gray-300">
-                        123A Hughes Estate, Monita, Avrk,
+                        Pine Avenue, Los Angeles, CA,
                         <br />
                         United States
                       </p>
