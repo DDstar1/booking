@@ -78,13 +78,10 @@ export default function Footer() {
           <div>
             <h3 className="text-white font-semibold mb-4">Contact</h3>
             <div className="space-y-2 text-gray-400">
-              <div className="flex items-center">
-                <Phone className="h-4 w-4 mr-2" />
-                <span>+1 (555) 123-4567</span>
-              </div>
+  
               <div className="flex items-center">
                 <Mail className="h-4 w-4 mr-2" />
-                <span>hello@starbook.com</span>
+                <span>alex@elitestarbook.com</span>
               </div>
               <div className="flex items-center">
                 <MapPin className="h-4 w-4 mr-2" />
