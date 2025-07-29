@@ -64,8 +64,6 @@ export default function BookingForm({ celebName = "" }) {
       formData;
     if (
       !fullName ||
-      !jobTitle ||
-      !organization ||
       !phone ||
       !email ||
       !address ||
@@ -97,17 +95,22 @@ export default function BookingForm({ celebName = "" }) {
   };
 
   const requiredStep2Fields = [
-    "fullName",
-    "jobTitle",
-    "organization",
-    "phone",
-    "email",
-    "address",
-    "airport",
-  ];
-  const isSubmitDisabled = requiredStep2Fields.some(
-    (field) => !formData[field]?.trim()
-  );
+  "fullName",
+  "phone",
+  "email",
+  "address",
+  "airport",
+  "jobTitle (optional)",
+  "organization (optional)",
+];
+
+const filteredList = requiredStep2Fields.filter(
+  (field) => !field.includes("(optional)")
+);
+
+const isSubmitDisabled = filteredList.some(
+  (field) => !formData[field]?.trim()
+);
 
   return (
     <div className=" p-6">
